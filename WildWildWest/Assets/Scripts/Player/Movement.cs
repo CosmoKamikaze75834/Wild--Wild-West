@@ -1,4 +1,5 @@
 using UnityEngine;
+using Zenject;
 
 [RequireComponent(typeof(CharacterController))]
 public class Movement : MonoBehaviour
@@ -31,16 +32,17 @@ public class Movement : MonoBehaviour
         _controller.Move(playerInput * Time.deltaTime);
     }
 
-    public void Initialize(IMotionControl motionControl)
-    {
-        _motionControl = motionControl;
-    }
-
     private void UpdateVerticalVelocity()
     {
         if (_controller.isGrounded && _verticalVelocity < 0f)
             _verticalVelocity = -2f;
         else
             _verticalVelocity += Physics.gravity.y * Time.deltaTime;
+    }
+
+    [Inject]//сообщает что нужно внедрить зависимость
+    private void Construct(IMotionControl motionControl)
+    {
+        _motionControl = motionControl;
     }
 }

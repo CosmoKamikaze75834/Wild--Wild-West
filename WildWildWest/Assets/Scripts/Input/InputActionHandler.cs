@@ -1,9 +1,10 @@
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Zenject;
 
 public abstract class InputActionHandler : MonoBehaviour
 {
-    [SerializeField] protected PlayerInputProvider _inputProvider;
+    protected PlayerInput Input;
 
     protected abstract InputAction Action { get; }
 
@@ -25,4 +26,10 @@ public abstract class InputActionHandler : MonoBehaviour
     }
 
     protected abstract void OnAction(InputAction.CallbackContext context);
+
+    [Inject]
+    private void Construct(PlayerInput playerInput)
+    {
+        Input = playerInput;
+    }
 }
