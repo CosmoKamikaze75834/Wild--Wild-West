@@ -11,6 +11,7 @@ public class Movement : MonoBehaviour
 
     private CharacterController _controller;
     private IMotionControl _motionControl;
+    private IAnimationPlayer _animationPlayer;
 
     private float _verticalVelocity;
 
@@ -30,6 +31,8 @@ public class Movement : MonoBehaviour
 
         playerInput.y = _verticalVelocity;
         _controller.Move(playerInput * Time.deltaTime);
+
+        _animationPlayer.EstablishSpeed(input.magnitude);
     }
 
     private void UpdateVerticalVelocity()
@@ -41,8 +44,9 @@ public class Movement : MonoBehaviour
     }
 
     [Inject]//сообщает что нужно внедрить зависимость
-    private void Construct(IMotionControl motionControl)
+    private void Construct(IMotionControl motionControl, IAnimationPlayer animationPlayer)
     {
         _motionControl = motionControl;
+        _animationPlayer = animationPlayer;
     }
 }

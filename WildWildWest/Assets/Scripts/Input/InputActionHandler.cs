@@ -14,7 +14,6 @@ public abstract class InputActionHandler : MonoBehaviour
 
         Action.performed += OnAction;
         Action.canceled += OnAction;
-
     }
 
     private void OnDisable()
