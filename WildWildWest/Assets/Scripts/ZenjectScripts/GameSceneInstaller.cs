@@ -13,10 +13,12 @@ public class GameSceneInstaller : MonoInstaller
         Container.Bind<InputMove>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputRotation>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputJump>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<InputRun>().FromComponentInHierarchy().AsSingle();
 
         Container.Bind<PlayerInput>().AsSingle();
 
         Container.Bind<CameraRotation>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Movement>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<Jumper>().FromComponentInHierarchy().AsSingle();
     }
 }
