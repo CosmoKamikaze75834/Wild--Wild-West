@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 0043e63379985ff4e841f92bce1c9ace
+guid: 8620ffe7d88d7d047bb498446082af63
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -37,7 +37,7 @@ ModelImporter:
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 319
+      lastFrame: 63
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
@@ -504,14 +504,14 @@ ModelImporter:
         length: 0
         modified: 0
     skeleton:
-    - name: Rifle Idle (1)(Clone)
+    - name: Idle(Clone)
       parentName: 
-      position: {x: -0.009165045, y: 0.70276326, z: 0.0002494078}
-      rotation: {x: -0.49991548, y: 0.49991626, z: 0.5000845, w: 0.50008374}
+      position: {x: 0.01080605, y: 0.6556624, z: 0.0068952385}
+      rotation: {x: -0.49991548, y: 0.49991626, z: 0.5000846, w: 0.5000838}
       scale: {x: 1, y: 1, z: 1}
     - name: Pelvis
-      parentName: Rifle Idle (1)(Clone)
-      position: {x: 0.000048339163, y: -0.009165049, z: 0.14368242}
+      parentName: Idle(Clone)
+      position: {x: 0.00006424431, y: 0.010806024, z: 0.19078329}
       rotation: {x: 0.5, y: -0.5, z: -0.5, w: -0.5}
       scale: {x: 1, y: 1, z: 1}
     - name: Spine

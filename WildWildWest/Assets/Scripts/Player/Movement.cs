@@ -13,37 +13,27 @@ public class Movement : MonoBehaviour
     private IMotionControl _motionControl;
     private IAnimationPlayer _animationPlayer;
 
-    private float _verticalVelocity;
+    public CharacterController CharacterController => _controller;
 
     private void Awake()
     {
         _controller = GetComponent<CharacterController>();
     }
 
-    private void Update()
+    public void Move(Vector3 forward, Vector3 right, Vector3 verticalVelocity)
     {
         Vector2 input = Vector2.ClampMagnitude(_motionControl.MoveDirection, ValidVectorLength);
 
-        var playerInput = new Vector3(input.x, 0, input.y);
+        var playerInput = right * input.x + forward * input.y;
         playerInput *= _speed;
 
-        UpdateVerticalVelocity();
-
-        playerInput.y = _verticalVelocity;
+        playerInput.y = verticalVelocity.y;
         _controller.Move(playerInput * Time.deltaTime);
 
         _animationPlayer.EstablishSpeed(input.magnitude);
     }
 
-    private void UpdateVerticalVelocity()
-    {
-        if (_controller.isGrounded && _verticalVelocity < 0f)
-            _verticalVelocity = -2f;
-        else
-            _verticalVelocity += Physics.gravity.y * Time.deltaTime;
-    }
-
-    [Inject]//сообщает что нужно внедрить зависимость
+    [Inject]
     private void Construct(IMotionControl motionControl, IAnimationPlayer animationPlayer)
     {
         _motionControl = motionControl;
