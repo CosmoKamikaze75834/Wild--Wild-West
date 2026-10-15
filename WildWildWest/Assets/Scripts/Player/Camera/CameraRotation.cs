@@ -10,7 +10,7 @@ public class CameraRotation : MonoBehaviour
     [SerializeField] private float _verticalMinAngle = -89f;
     [SerializeField] private float _verticalMaxAngle = 90f;
 
-    private float _cameraAngle = 0f;//текущий угол поворота камеры
+    private float _cameraAngle = 0f;
 
     private IMotionRotation _motionRotation;
 
@@ -32,14 +32,13 @@ public class CameraRotation : MonoBehaviour
         _cameraTransform.localRotation = Quaternion.Euler(_cameraAngle, 0f, 0f);
     }
 
-    //проецирует вектор на плоскость, нормаль которой Vector3.up, и нормализует его
     public Vector3 GetForwardOnGround() => 
         Vector3.ProjectOnPlane(_cameraTransform.forward, Vector3.up).normalized;
 
     public Vector3 GetRight() =>
         Vector3.ProjectOnPlane(_cameraTransform.right, Vector3.up).normalized;
 
-    [Inject]//сообщает что нужно внедрить зависимость
+    [Inject]
     private void Construct(IMotionRotation motionRotation)
     {
         _motionRotation = motionRotation;

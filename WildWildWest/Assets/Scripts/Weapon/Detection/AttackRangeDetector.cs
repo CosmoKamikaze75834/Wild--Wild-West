@@ -6,7 +6,6 @@ public class AttackRangeDetector : MonoBehaviour
     [SerializeField] private float _radiusFinder;
     [SerializeField] private Transform _pointFinder;
 
-    //вернёт список объектов типа врага в радиусе атаки
     public List<Enemy> GetObjectsRadius()
     {
         Collider[] colliders = Physics.OverlapSphere(_pointFinder.position, _radiusFinder);

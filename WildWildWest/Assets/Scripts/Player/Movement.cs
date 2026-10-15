@@ -38,7 +38,6 @@ public class Movement : MonoBehaviour
         _animationPlayer.EstablishSpeed(input.magnitude);
     }
 
-    //для изменения скорости при ускорение
     public void ChangeSpeed(float speed)
     {
         _speed = speed;

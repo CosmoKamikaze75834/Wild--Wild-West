@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public interface IAnimationPlayer
 {
     void EstablishSpeed(float movement);
