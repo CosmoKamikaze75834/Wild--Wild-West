@@ -14,6 +14,8 @@ public class GameSceneInstaller : MonoInstaller
         Container.Bind<InputRotation>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputJump>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputRun>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<InputAttack>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<InputScroll>().FromComponentInHierarchy().AsSingle();
 
         Container.Bind<PlayerInput>().AsSingle();
 
