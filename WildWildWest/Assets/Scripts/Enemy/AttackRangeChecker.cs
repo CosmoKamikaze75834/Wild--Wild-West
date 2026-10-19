@@ -14,7 +14,6 @@ public class AttackRangeChecker : MonoBehaviour
     {
         if (IsPlayer(other))
         {
-            Debug.Log("Игрок в радиусе атаки");
             _isTargetInRange = true;
             OnTargetEnteredRange?.Invoke();
         }
@@ -24,10 +23,14 @@ public class AttackRangeChecker : MonoBehaviour
     {
         if (IsPlayer(other))
         {
-            Debug.Log("Игрок вышел из радиуса атаки");
             _isTargetInRange = false;
             OnTargetExitedRange?.Invoke();
         }
+    }
+
+    private void OnDisable()
+    {
+        _isTargetInRange = false;
     }
 
     private bool IsPlayer(Collider other)

@@ -1,12 +1,13 @@
 using UnityEngine;
+using Zenject;
 
 public class StateEntity : MonoBehaviour
 {
-    [SerializeField] private TargetFollower _follower;
-    [SerializeField] private Attacker _attacker;
     [SerializeField] private AttackRangeChecker _rangeChecker;
 
-    private EnemyState _currentState;
+    private IEnemyState _currentState;
+    private IEnemyState _moveState;
+    private IEnemyState _attackState;
 
     private void OnEnable()
     {
@@ -20,31 +21,45 @@ public class StateEntity : MonoBehaviour
     {
         _rangeChecker.OnTargetEnteredRange -= LaunchAttack;
         _rangeChecker.OnTargetExitedRange -= LaunchMove;
+
+        if (_currentState != null)
+            _currentState.Exit();
+
+        _currentState = null;
     }
 
     private void Update()
     {
-        switch(_currentState)
-        {
-            case EnemyState.follow:
-                _follower.Follow();
-                break;
-
-            case EnemyState.attack:
-                _attacker.Attack();
-                break;
-        }
+        if (_currentState != null)
+            _currentState.Update();
     }
 
     private void LaunchMove()
     {
-        _currentState = EnemyState.follow;
-        _follower.Resume();
+        ChangeState(_moveState);
     }
 
     private void LaunchAttack()
     {
-        _currentState = EnemyState.attack;
-        _follower.Stop();
+        ChangeState(_attackState);
+    }
+
+    //переключаемые состо€ни€
+    private void ChangeState(IEnemyState newState)
+    {
+        //чтобы не переключатьс€ повторно
+        if (_currentState == newState)
+            return;
+
+        _currentState?.Exit();//завершаем предыдущее состо€ние если оно существует
+        _currentState = newState;//устанавливаем новое состо€ние
+        _currentState.Enter();//запускаем действие при входе в него
+    }
+
+    [Inject]
+    private void Construct(EnemyMoveState enemyMoveState, EnemyAttackState enemyAttackState)
+    {
+        _moveState = enemyMoveState;
+        _attackState = enemyAttackState;
     }
 }

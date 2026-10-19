@@ -1,7 +1,6 @@
 using UnityEngine;
 using Zenject;
 
-//следует за игроком
 public class TargetFollower : MonoBehaviour
 {
     [SerializeField] private EnemyNavigation _navigation;

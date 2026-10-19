@@ -11,6 +11,7 @@ public class Attacker : MonoBehaviour
 
     private IDamageable _damageable;
     private IAnimationEnemy _animationEnemy;
+    private AttackRangeChecker _attackRangeChecker;
 
     private void OnDestroy()
     {
@@ -27,16 +28,18 @@ public class Attacker : MonoBehaviour
     }
 
     [Inject]
-    private void Construct(IDamageable damageable, IAnimationEnemy animationEnemy)
+    private void Construct(IDamageable damageable, IAnimationEnemy animationEnemy, AttackRangeChecker attackRangeChecker)
     {
         _damageable = damageable;
         _animationEnemy = animationEnemy;
+        _attackRangeChecker = attackRangeChecker;
 
         _animationEnemy.AttackHit += CallDamage;
     }
 
     private void CallDamage()
     {
-        _damageable.TakeDamage(_damage);
+        if(_attackRangeChecker.IsTargetInRange)
+            _damageable.TakeDamage(_damage);
     }
 }

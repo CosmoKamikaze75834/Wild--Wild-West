@@ -1,19 +1,11 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Animator))]
-public class EnemyAnimationHandler : MonoBehaviour, IAnimationEnemy
+public class EnemyAnimationHandler : AnimationHandlerBase, IAnimationEnemy
 {
     private static readonly int Attack = Animator.StringToHash(nameof(Attack));
 
-    private Animator _animator;
-
     public event Action AttackHit;
-
-    private void Awake()
-    {
-        _animator = GetComponent<Animator>();
-    }
 
     public void TriggerAttack()
     {
