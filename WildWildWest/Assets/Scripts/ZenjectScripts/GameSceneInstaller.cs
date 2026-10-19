@@ -1,10 +1,8 @@
 using Zenject;
-using Zenject.SpaceFighter;
 
 
 public class GameSceneInstaller : MonoInstaller
 {
-    //дл€ объ€влени€ правила предоставлени€ зависимостей
     public override void InstallBindings()
     {
         Container.BindInterfacesTo<InputSystem>().FromComponentInHierarchy().AsSingle();

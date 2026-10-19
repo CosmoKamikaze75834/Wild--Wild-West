@@ -10,21 +10,33 @@ public class Attacker : MonoBehaviour
     private float _nextAttackTime; // Время, когда враг сможет атаковать следующий раз
 
     private IDamageable _damageable;
+    private IAnimationEnemy _animationEnemy;
+
+    private void OnDestroy()
+    {
+        _animationEnemy.AttackHit -= CallDamage;
+    }
 
     public void Attack()
     {
-        Debug.Log("Перешли в состоянии атаки и атакуем");
-
         if (Time.time >= _nextAttackTime)
         {
-            _damageable.TakeDamage(_damage);
+            _animationEnemy.TriggerAttack();
             _nextAttackTime = _attackDelay + Time.time;// Устанавливаем время следующей атаки
         }
     }
 
     [Inject]
-    private void Construct(IDamageable damageable)
+    private void Construct(IDamageable damageable, IAnimationEnemy animationEnemy)
     {
         _damageable = damageable;
+        _animationEnemy = animationEnemy;
+
+        _animationEnemy.AttackHit += CallDamage;
+    }
+
+    private void CallDamage()
+    {
+        _damageable.TakeDamage(_damage);
     }
 }

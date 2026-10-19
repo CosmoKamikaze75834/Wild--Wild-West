@@ -8,10 +8,12 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private CameraRotation _cameraRotation;
     [SerializeField] private Turner _turner;
     [SerializeField] private Runner _runner;
+    [SerializeField] private Health health;
 
     private void Start()
     {
         Cursor.visible = false;
+        health.Reset();
     }
 
     private void Update()

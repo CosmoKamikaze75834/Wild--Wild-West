@@ -32,6 +32,6 @@ public class AttackRangeChecker : MonoBehaviour
 
     private bool IsPlayer(Collider other)
     {
-        return other.TryGetComponent<Player>(out _);
+        return other.GetComponentInChildren<Player>();
     }
 }
