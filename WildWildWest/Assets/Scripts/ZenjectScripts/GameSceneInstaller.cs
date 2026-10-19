@@ -1,4 +1,5 @@
 using Zenject;
+using Zenject.SpaceFighter;
 
 
 public class GameSceneInstaller : MonoInstaller
@@ -16,11 +17,13 @@ public class GameSceneInstaller : MonoInstaller
         Container.Bind<InputRun>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputAttack>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputScroll>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<IDamageable>().FromMethod(context => context.Container.Resolve<Player>().GetComponent<Health>()).AsCached();
 
         Container.Bind<PlayerInput>().AsSingle();
 
         Container.Bind<CameraRotation>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Movement>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Jumper>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
     }
 }

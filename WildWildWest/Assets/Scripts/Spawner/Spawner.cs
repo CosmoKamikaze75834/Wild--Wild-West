@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
+using Zenject;
 using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
@@ -14,6 +15,7 @@ public class Spawner : MonoBehaviour
     [SerializeField] private int _poolMaxSize = 5;
 
     private ObjectPool<Enemy> _pool;
+    private DiContainer _container;
 
     public event Action<Enemy> OnSpawn;//враг появился
 
@@ -25,7 +27,8 @@ public class Spawner : MonoBehaviour
         _pool = new ObjectPool<Enemy>(
         createFunc: () =>
         {
-            Enemy enemy = Instantiate(_prefab);
+            Enemy enemy = _container.InstantiatePrefabForComponent<Enemy>(_prefab);
+            //enemy.gameObject.SetActive(false);
             return enemy;
         },
         actionOnGet: (null),
@@ -79,5 +82,11 @@ public class Spawner : MonoBehaviour
             if (i < enemyCount - 1)
                 yield return wait;
         }
+    }
+
+    [Inject]
+    private void Construct(DiContainer container)
+    {
+        _container = container;
     }
 }
