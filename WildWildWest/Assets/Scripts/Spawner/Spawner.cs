@@ -1,10 +1,11 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.Pool;
+using Random = UnityEngine.Random;
 
 public class Spawner : MonoBehaviour
 {
-    private const float Delay = 0.5f;
-
     [SerializeField] private Enemy _prefab;
 
     [SerializeField] private Transform[] _pointsSpawn;
@@ -14,16 +15,20 @@ public class Spawner : MonoBehaviour
 
     private ObjectPool<Enemy> _pool;
 
-    private WaitForSeconds _wait = new WaitForSeconds(Delay);
+    public event Action<Enemy> OnSpawn;//враг появился
+
+    public event Action<Enemy> EnemyDied;
+    public event Action<Enemy> BossDied;
 
     private void Awake()
     {
         _pool = new ObjectPool<Enemy>(
-        createFunc: () => {
+        createFunc: () =>
+        {
             Enemy enemy = Instantiate(_prefab);
             return enemy;
         },
-        actionOnGet: (enemy) => PrepareObject(enemy),
+        actionOnGet: (null),
         actionOnRelease: (enemy) => enemy.gameObject.SetActive(false),
         actionOnDestroy: (enemy) => Destroy(enemy.gameObject),
         collectionCheck: true,
@@ -31,17 +36,48 @@ public class Spawner : MonoBehaviour
         maxSize: _poolMaxSize);
     }
 
-    private void Start()
+    public void StartSpawning(int enemyCount, float enemySpawnInterval)
     {
-        _pool.Get();
+        StartCoroutine(SpawnEnemies(enemyCount, enemySpawnInterval));
     }
 
-    private void PrepareObject(Enemy enemy)
+    private bool PrepareObject(Enemy enemy)
     {
         var randomPoint = Random.Range(0, _pointsSpawn.Length);
         var position = _pointsSpawn[randomPoint].position;
 
-        enemy.ChangeStates(position);
-        enemy.gameObject.SetActive(true);
+        return enemy.SpawnAt(position);
+    }
+
+    //возвращение объекта в пул
+    private void ReturnEnemyPool(Enemy enemy)
+    {
+        enemy.Died -= ReturnEnemyPool;
+        _pool.Release(enemy);
+        EnemyDied?.Invoke(enemy);
+    }
+
+    public IEnumerator SpawnEnemies(int enemyCount, float enemySpawnInterval)
+    {
+        WaitForSeconds wait = new WaitForSeconds(enemySpawnInterval);
+
+        for (int i = 0; i < enemyCount; i++)
+        {
+            Enemy enemy = _pool.Get();
+
+            enemy.Died += ReturnEnemyPool;
+            enemy.gameObject.SetActive(true);
+
+            if (PrepareObject(enemy))
+                OnSpawn?.Invoke(enemy);
+            else
+            {
+                enemy.Died -= ReturnEnemyPool;
+                _pool.Release(enemy);
+            }
+
+            if (i < enemyCount - 1)
+                yield return wait;
+        }
     }
 }

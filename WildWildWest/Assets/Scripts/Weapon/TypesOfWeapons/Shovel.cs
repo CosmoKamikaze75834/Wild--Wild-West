@@ -10,6 +10,6 @@ public class Shovel : Weapon
         List<Enemy> enemies = _attackRangeDetector.GetObjectsRadius();
 
         foreach (var item in enemies)
-            ApplyDamage(item);
+            ApplyDamage((IDamageable)item);
     }
 }
