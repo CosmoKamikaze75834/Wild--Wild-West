@@ -1,5 +1,6 @@
 using System;
-using System.Collections;
+using System.Threading;
+using System.Threading.Tasks;
 using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
@@ -8,14 +9,17 @@ using Random = UnityEngine.Random;
 public class Spawner : MonoBehaviour
 {
     [SerializeField] private Enemy _prefab;
-
     [SerializeField] private Transform[] _pointsSpawn;
 
     [SerializeField] private int _poolCapacity = 5;
     [SerializeField] private int _poolMaxSize = 5;
 
     private ObjectPool<Enemy> _pool;
+
     private DiContainer _container;
+
+    private CancellationTokenSource _cancellationTokenSource;
+    private Task _spawnTask;
 
     public event Action<Enemy> OnSpawn;//враг появился
 
@@ -39,9 +43,30 @@ public class Spawner : MonoBehaviour
         maxSize: _poolMaxSize);
     }
 
-    public void StartSpawning(int enemyCount, float enemySpawnInterval)
+    public async Task StartSpawning(int enemyCount, float enemySpawnInterval)
+    {                            //задача уже завершила выполнение?
+        if (_spawnTask != null && !_spawnTask.IsCompleted)
+            throw new InvalidOperationException("Спавн уже выполняется");
+
+        _cancellationTokenSource = new CancellationTokenSource();
+        CancellationTokenSource source = _cancellationTokenSource;
+
+        try
+        {
+            _spawnTask = SpawnEnemiesAsync(enemyCount, enemySpawnInterval, source.Token);
+            await _spawnTask;
+        }
+        finally
+        {
+            _cancellationTokenSource = null;
+            source.Dispose();
+        }
+    }
+
+    //метод, через который другие классы смогут остановить спавн.
+    public void StopSpawning()
     {
-        StartCoroutine(SpawnEnemies(enemyCount, enemySpawnInterval));
+        _cancellationTokenSource?.Cancel();
     }
 
     private bool PrepareObject(Enemy enemy)
@@ -60,12 +85,18 @@ public class Spawner : MonoBehaviour
         EnemyDied?.Invoke(enemy);
     }
 
-    public IEnumerator SpawnEnemies(int enemyCount, float enemySpawnInterval)
+    [Inject]
+    private void Construct(DiContainer container)
     {
-        WaitForSeconds wait = new WaitForSeconds(enemySpawnInterval);
+        _container = container;
+    }
 
+    private async Task SpawnEnemiesAsync(int enemyCount, float enemySpawnInterval, CancellationToken cancellationToken)
+    {
         for (int i = 0; i < enemyCount; i++)
         {
+            cancellationToken.ThrowIfCancellationRequested();//явно проверяем токен
+
             Enemy enemy = _pool.Get();
 
             enemy.Died += ReturnEnemyPool;
@@ -80,13 +111,13 @@ public class Spawner : MonoBehaviour
             }
 
             if (i < enemyCount - 1)
-                yield return wait;
+                await Task.Delay(TimeSpan.FromSeconds(enemySpawnInterval), cancellationToken);
         }
     }
 
-    [Inject]
-    private void Construct(DiContainer container)
+    private void OnDestroy()
     {
-        _container = container;
+        Debug.Log("Spawner уничтожается. Отменяем спавн.");
+        StopSpawning();
     }
 }
