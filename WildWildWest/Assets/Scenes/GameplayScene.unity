@@ -356,7 +356,7 @@ GameObject:
   - component: {fileID: 248365058}
   - component: {fileID: 248365059}
   m_Layer: 0
-  m_Name: SpawnerEnemy
+  m_Name: Spawner
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -389,7 +389,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5ea7bdd06927c2a4aaf0bdf1093d2965, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _prefab: {fileID: 6333896639478766622, guid: 3578d81cf195ede4aa6073a0578b22a4, type: 3}
+  _enemyPrefab: {fileID: 6333896639478766622, guid: 3578d81cf195ede4aa6073a0578b22a4,
+    type: 3}
+  _bossPrefab: {fileID: 7766355492651040626, guid: ce352c7a76af06248bdb823d6723d9cb,
+    type: 3}
   _pointsSpawn:
   - {fileID: 1255951266}
   - {fileID: 1278783865}
