@@ -1,5 +1,4 @@
 using System;
-using UnityEngine;
 using UnityEngine.Pool;
 using Zenject;
 
@@ -7,7 +6,7 @@ public class EnemyPool
 {
     private readonly ObjectPool<Enemy> _pool;
 
-    public event Action<Enemy> Died;
+    public event Action<Enemy> EnemyDied;
 
     public EnemyPool(Enemy prefab, DiContainer container, int capacity, int maxSize)
     {
@@ -38,6 +37,6 @@ public class EnemyPool
     private void OnEnemyDied(Enemy enemy)
     {
         Release(enemy);
-        Died?.Invoke(enemy);
+        EnemyDied?.Invoke(enemy);
     }
 }

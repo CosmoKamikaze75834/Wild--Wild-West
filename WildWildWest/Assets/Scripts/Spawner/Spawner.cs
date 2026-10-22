@@ -18,8 +18,8 @@ public class Spawner : MonoBehaviour
 
     private DiContainer _container;
 
-    private CancellationTokenSource _cancellationTokenSource;
-    private Task _spawnTask;
+    private CancellationTokenSource _cancellationTokenSource;//позволяет запросить отмену операции
+    private Task _spawnTask;//выполненная или завершённая асинхрон. операция
 
     public event Action<Enemy> OnSpawn;
     public event Action<Enemy> EnemyDied;
@@ -30,8 +30,8 @@ public class Spawner : MonoBehaviour
         _enemyPool = new EnemyPool(_enemyPrefab, _container, _poolCapacity, _poolMaxSize);
         _bossPool = new EnemyPool(_bossPrefab, _container, 1, 1);
 
-        _enemyPool.Died += OnEnemyDied;
-        _bossPool.Died += OnBossDied;
+        _enemyPool.EnemyDied += OnEnemyDied;
+        _bossPool.EnemyDied += OnBossDied;
     }
 
     public async Task StartSpawning(int enemyCount, float enemySpawnInterval)
@@ -44,7 +44,8 @@ public class Spawner : MonoBehaviour
 
         try
         {
-            _spawnTask = SpawnEnemiesAsync(enemyCount, enemySpawnInterval, source.Token);
+            //сохраняем задачу чтобы отслеживать её выполнение
+            _spawnTask = SpawnEnemiesAsync(enemyCount, enemySpawnInterval, source.Token);//запуск метода создания обычных врагов
             await _spawnTask;
         }
         finally
@@ -68,7 +69,7 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            cancellationToken.ThrowIfCancellationRequested();
+            cancellationToken.ThrowIfCancellationRequested();//не запрошена ли отмена?
 
             if (TrySpawn(_enemyPool, out Enemy enemy))
                 OnSpawn?.Invoke(enemy);
@@ -121,9 +122,9 @@ public class Spawner : MonoBehaviour
         StopSpawning();
 
         if (_enemyPool != null)
-            _enemyPool.Died -= OnEnemyDied;
+            _enemyPool.EnemyDied -= OnEnemyDied;
 
         if (_bossPool != null)
-            _bossPool.Died -= OnBossDied;
+            _bossPool.EnemyDied -= OnBossDied;
     }
 }
