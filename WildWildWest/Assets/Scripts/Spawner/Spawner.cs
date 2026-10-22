@@ -49,8 +49,8 @@ public class Spawner : MonoBehaviour
         }
         finally
         {
-            _cancellationTokenSource = null;
             source.Dispose();
+            _cancellationTokenSource = null;
         }
     }
 

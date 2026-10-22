@@ -1,73 +1,126 @@
 using System;
+using System.Threading;
 using System.Threading.Tasks;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
+//управл€ет последовательностью волн
 public class WaveHandler : MonoBehaviour
 {
-    [SerializeField] private Wave _wave;
+    [SerializeField] private Wave[] _wave;
     [SerializeField] private Spawner _spawner;
+    [SerializeField, Min(1)] private float _bossSpawnDelay = 5f;
 
-    private int _numberEnemiesSpawned;
-    private int _countEnemyDied;
+    private readonly WaveProgress _progress = new WaveProgress();
 
-    private bool _spawnEnd;
-    private bool _isWaveCompleted;
+    private int _maxWaveDelay = 15;
+    private int _minWaveDelay = 7;
 
-    private async void Start()
-    {
-        try
-        {
-            await LaunchWave();//ждЄт пока спавнер закончит создание вргаов
-            Debug.Log("¬се враги по€вились");
-            _spawnEnd = true;
-            CheckWaveCompletion();
-        }
-        catch (OperationCanceledException)
-        {
-            Debug.Log("—павн врагов отменЄн");
-        }
-        catch(Exception exception)
-        {
-            Debug.LogException(exception);
-        }
-    }
+    private int _currentWaveIndex;
+
+    private CancellationTokenSource _cancellationTokenSource;
+
+    public event Action AllWavesCompleted;
 
     private void OnEnable()
     {
-        _spawner.OnSpawn += OnEnemySpawned;
+        _cancellationTokenSource = new CancellationTokenSource();
+
+        _spawner.OnSpawn += _progress.OnEnemySpawned;
         _spawner.EnemyDied += OnEnemyDied;
+        _spawner.BossDied += OnBossDied;
     }
+
     private void OnDisable()
     {
-        _spawner.OnSpawn -= OnEnemySpawned;
+        _spawner.OnSpawn -= _progress.OnEnemySpawned;
         _spawner.EnemyDied -= OnEnemyDied;
+        _spawner.BossDied -= OnBossDied;
+
+        if (_cancellationTokenSource != null)
+        {
+            _cancellationTokenSource.Cancel();
+            _cancellationTokenSource.Dispose();
+            _cancellationTokenSource = null;
+        }
+
+        _spawner.StopSpawning();
     }
 
-    public Task LaunchWave()
+    private async void Start()
     {
-        return _spawner.StartSpawning(_wave.EnemyCount, _wave.EnemySpawnInterval);
+        await ExecuteSafelyAsync(RunWaveAsync);
     }
 
-    private void OnEnemySpawned(Enemy enemy)
+    //1 - запускает обычных врагов
+    private async Task RunWaveAsync()
     {
-        _numberEnemiesSpawned++;
+        await _spawner.StartSpawning(_wave[_currentWaveIndex].EnemyCount, _wave[_currentWaveIndex].EnemySpawnInterval);//запуск волны
+        _progress.MarkSpawningCompleted();
+        CheckWaveCompletion();
+    }
+
+    //2 - все враги созданы и погибли?
+    private void CheckWaveCompletion()
+    {
+        if (_progress.TryScheduleBoss())
+            _ = ExecuteSafelyAsync(() => SpawnBossDelay(_cancellationTokenSource.Token));
+    }
+
+    //3 - ожидание .. и по€вление босса
+    private async Task SpawnBossDelay(CancellationToken token)
+    {
+        await WaitAsync(_bossSpawnDelay, token);
+        _spawner.SpawnBoss();
+    }
+
+    //4 - првоерка следующей волны и сброс состо€ни€
+    private void OnBossDied(Enemy enemy)
+    {
+        _currentWaveIndex++;
+
+        if (_currentWaveIndex >= _wave.Length)
+        {
+            AllWavesCompleted?.Invoke();
+            return;
+        }
+
+        _progress.Reset();
+
+        _ = ExecuteSafelyAsync(() => StartNextWaveAsync(_cancellationTokenSource.Token));
+    }
+
+    //5 - повтор€ет цикл пока не закончатс€ волны
+    private async Task StartNextWaveAsync(CancellationToken token)
+    {
+        await WaitAsync(Random.Range(_minWaveDelay, _maxWaveDelay), token);
+        await RunWaveAsync();
     }
 
     private void OnEnemyDied(Enemy enemy)
     {
-        _countEnemyDied++;
-        CheckWaveCompletion();
+        _progress.OnEnemyDied(enemy);
+        CheckWaveCompletion();//проверка услови€ перехода к боссу
     }
 
-    private void CheckWaveCompletion()
+    private async Task WaitAsync(float delay, CancellationToken token)
     {
-        if (_isWaveCompleted)
-            return;
+        await Task.Delay(TimeSpan.FromSeconds(delay), token);
+    }
 
-        if (_spawnEnd && _numberEnemiesSpawned == _countEnemyDied)
+    private async Task ExecuteSafelyAsync(Func<Task> operation)
+    {
+        try
         {
-            Debug.Log("¬се обычные враги побеждены!");
-            _isWaveCompleted = true;
+            await operation();
+        }
+        catch (OperationCanceledException)
+        {
+
+        }
+        catch (Exception exception)
+        {
+            Debug.LogException(exception);
         }
     }
 }
