@@ -5,23 +5,32 @@ using Zenject;
 
 public class WindowMainMenu : Window
 {
-    [SerializeField] private Button _button;
+    [SerializeField] private Button _buttonPlay;
+    [SerializeField] private Button _buttonExit;
 
     private SceneLoader _sceneLoader;
 
     private void OnEnable()
     {
-        _button.onClick.AddListener(OnPlayClicked);
+        _buttonPlay.onClick.AddListener(OnPlayClicked);
+        _buttonExit.onClick.AddListener(OnExitClicked);
     }
 
     private void OnDisable()
     {
-        _button.onClick.RemoveListener(OnPlayClicked);
+        _buttonPlay.onClick.RemoveListener(OnPlayClicked);
+        _buttonExit.onClick.RemoveListener(OnExitClicked);
     }
 
     private void OnPlayClicked()
     {
         _sceneLoader.Load("LoadingScene");
+    }
+
+    private void OnExitClicked()
+    {
+        Application.Quit();
+        Debug.Log("Вы вышли из игры");
     }
 
     [Inject]

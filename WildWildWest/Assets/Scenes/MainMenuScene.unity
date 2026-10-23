@@ -649,7 +649,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _windowGroup: {fileID: 759519146}
-  _button: {fileID: 515875614}
+  _buttonPlay: {fileID: 515875614}
+  _buttonExit: {fileID: 1335066748}
 --- !u!225 &759519146
 CanvasGroup:
   m_ObjectHideFlags: 0

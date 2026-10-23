@@ -1,8 +1,6 @@
-using System;
 using System.Collections;
 using UnityEngine;
 using UnityEngine.SceneManagement;
-using static UnityEngine.Rendering.HDROutputUtils;
 
 //переходы между сценами
 public class SceneLoader : MonoBehaviour
@@ -12,17 +10,11 @@ public class SceneLoader : MonoBehaviour
         SceneManager.LoadScene(nameScene);
     }
 
-    public IEnumerator LoadAsync(string nameScene, Action<float> onProgress)
+    public IEnumerator LoadAsync(string nameScene)
     {
-        AsyncOperation operation = SceneManager.LoadSceneAsync(nameScene);
+        AsyncOperation waitLoading = SceneManager.LoadSceneAsync(nameScene);
 
-        while (!operation.isDone)
-        {
-            float progress = Mathf.Clamp01(operation.progress / 0.9f);
-
-            onProgress?.Invoke(progress);
-
-            yield return null;
-        }
+        //поставь coroutine на паузу,пока сцена не догрузится
+        yield return waitLoading.isDone;
     }
 }
