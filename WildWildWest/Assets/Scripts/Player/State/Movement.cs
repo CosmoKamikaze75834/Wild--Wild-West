@@ -1,4 +1,6 @@
+using UnityEditor.Experimental.GraphView;
 using UnityEngine;
+using UnityEngine.Windows;
 using Zenject;
 
 [RequireComponent(typeof(CharacterController))]
@@ -29,10 +31,15 @@ public class Movement : MonoBehaviour
     {
         Vector2 input = Vector2.ClampMagnitude(_motionControl.MoveDirection, ValidVectorLength);
 
-        var playerInput = right * input.x + forward * input.y;
+        var playerInput = right * input.x + forward * input.y;//вектор желаемого перемещения персонажа
         playerInput *= _speed;
 
+        float directionMovement = Vector3.Dot(playerInput, forward);
+
+        _animationPlayer.EstablishForwardDirection(directionMovement);
+
         playerInput.y = verticalVelocity.y;
+
         _controller.Move(playerInput * Time.deltaTime);
 
         _animationPlayer.EstablishSpeed(input.magnitude);

@@ -21,6 +21,7 @@ public class WaveHandler : MonoBehaviour
     private CancellationTokenSource _cancellationTokenSource;
 
     public event Action AllWavesCompleted;
+    public event Action<int> WaveStarted;//волна началась  и номер волны
 
     private void OnEnable()
     {
@@ -47,9 +48,9 @@ public class WaveHandler : MonoBehaviour
         _spawner.StopSpawning();
     }
 
-    private async void Start()
+    private void Start()
     {
-        await ExecuteSafelyAsync(RunWaveAsync);
+        _ = ExecuteSafelyAsync(() => StartNextWaveAsync(_cancellationTokenSource.Token));
     }
 
     //1 - запускает обычных врагов
@@ -93,6 +94,7 @@ public class WaveHandler : MonoBehaviour
     //5 - повторяет цикл пока не закончатся волны
     private async Task StartNextWaveAsync(CancellationToken token)
     {
+        WaveStarted?.Invoke(_currentWaveIndex);
         await WaitAsync(Random.Range(_minWaveDelay, _maxWaveDelay), token);
         await RunWaveAsync();
     }

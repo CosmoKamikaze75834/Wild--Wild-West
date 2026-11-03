@@ -7,10 +7,16 @@ public class PlayerAnimationHandler : AnimationHandlerBase, IAnimationPlayer
     private static readonly int IsRun = Animator.StringToHash(nameof(IsRun));
     private static readonly int ShootPistol = Animator.StringToHash(nameof(ShootPistol));
     private static readonly int AttackShovel = Animator.StringToHash(nameof(AttackShovel));
+    private static readonly int ForwardDirection = Animator.StringToHash(nameof(ForwardDirection));
 
     public void EstablishSpeed(float movement)
     {
         _animator.SetFloat(Speed, Mathf.Abs(movement));
+    }
+
+    public void EstablishForwardDirection(float direction)
+    {
+        _animator.SetFloat(ForwardDirection, direction);
     }
 
     public void EstablishJump(bool isJumping)
