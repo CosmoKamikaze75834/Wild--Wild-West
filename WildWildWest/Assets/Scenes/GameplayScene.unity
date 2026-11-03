@@ -65677,7 +65677,7 @@ MonoBehaviour:
   _cameraRotation: {fileID: 53152907}
   _turner: {fileID: 1142559477}
   _runner: {fileID: 1142559482}
-  health: {fileID: 1512451141}
+  _health: {fileID: 1512451141}
 --- !u!4 &1914092388
 Transform:
   m_ObjectHideFlags: 0
@@ -74208,36 +74208,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1626984253606897370, guid: d2461963ebf40264fbfef35a796e8487,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3625987354601972681, guid: d2461963ebf40264fbfef35a796e8487,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3626107273691242083, guid: d2461963ebf40264fbfef35a796e8487,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3626327765658822319, guid: d2461963ebf40264fbfef35a796e8487,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3626813769317233117, guid: d2461963ebf40264fbfef35a796e8487,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3627544979197296201, guid: d2461963ebf40264fbfef35a796e8487,
-        type: 3}
-      propertyPath: m_CastShadows
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4049070707062199139, guid: d2461963ebf40264fbfef35a796e8487,
         type: 3}
       propertyPath: _launch

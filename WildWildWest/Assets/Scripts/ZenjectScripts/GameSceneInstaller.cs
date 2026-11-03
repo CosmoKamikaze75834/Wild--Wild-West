@@ -5,7 +5,7 @@ public class GameSceneInstaller : MonoInstaller
 {
     public override void InstallBindings()
     {
-        Container.BindInterfacesTo<InputSystem>().FromComponentInHierarchy().AsSingle();
+        Container.BindInterfacesAndSelfTo<PlayerInputHandler>().FromComponentInHierarchy().AsSingle();
 
         Container.Bind<IAnimationPlayer>().To<PlayerAnimationHandler>().FromComponentInHierarchy().AsSingle();
 

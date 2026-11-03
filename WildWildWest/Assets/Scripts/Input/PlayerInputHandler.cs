@@ -1,8 +1,10 @@
 using UnityEngine;
 using Zenject;
 
-public class InputSystem : MonoBehaviour, IMotionControl, IMotionRotation, IWeaponInput
+public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation, IWeaponInput
 {
+    private PlayerInput _playerInput;
+
     private InputMove _inputMove;
     private InputRotation _inputRotation;
     private InputJump _inputJump;
@@ -21,8 +23,13 @@ public class InputSystem : MonoBehaviour, IMotionControl, IMotionRotation, IWeap
     public Vector2 ConsumeScrollDelta() =>
        _inputScroll.ConsumeScrollDelta();
 
+    public void DisablePlayerInput()
+    {
+        _playerInput.Player.Disable();
+    }
+
     [Inject]
-    private void Construct(InputMove inputMove, InputRotation inputRotation, InputJump inputJump, InputRun inputRun, InputAttack inputAttack, InputScroll inputScroll)
+    private void Construct(InputMove inputMove, InputRotation inputRotation, InputJump inputJump, InputRun inputRun, InputAttack inputAttack, InputScroll inputScroll, PlayerInput inputActions)
     {
         _inputMove = inputMove;
         _inputRotation = inputRotation;
@@ -30,5 +37,6 @@ public class InputSystem : MonoBehaviour, IMotionControl, IMotionRotation, IWeap
         _inputRun = inputRun;
         _inputAttack = inputAttack;
         _inputScroll = inputScroll;
+        _playerInput = inputActions;
     }
 }

@@ -8,12 +8,12 @@ public class PlayerHandler : MonoBehaviour
     [SerializeField] private CameraRotation _cameraRotation;
     [SerializeField] private Turner _turner;
     [SerializeField] private Runner _runner;
-    [SerializeField] private Health health;
+    [SerializeField] private Health _health;
 
     private void Start()
     {
         Cursor.visible = false;
-        health.Reset();
+        _health.Reset();
     }
 
     private void Update()
@@ -21,6 +21,8 @@ public class PlayerHandler : MonoBehaviour
         _runner.Speed(_movement);
         _movement.Move(_cameraRotation.GetForwardOnGround(), _cameraRotation.GetRight(), _jumper.GetVerticalVelocity(_movement.CharacterController));
     }
+
+
 
     [Inject]
     private void Construct(Movement movement,CameraRotation cameraRotation)
