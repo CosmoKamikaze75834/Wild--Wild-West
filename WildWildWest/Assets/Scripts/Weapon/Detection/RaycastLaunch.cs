@@ -1,4 +1,5 @@
 using UnityEngine;
+using static UnityEngine.UI.Image;
 
 public class RaycastLaunch : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class RaycastLaunch : MonoBehaviour
     public bool TryGetHit(out RaycastHit hitObject)
     {
         Ray ray = _camera.ViewportPointToRay(new Vector3(0.5f, 0.5f, 0f));
+
+        Debug.DrawRay(ray.origin, ray.direction * _maxDistance, Color.red, 3f);
 
         if (Physics.Raycast(ray, out RaycastHit hitInfo, _maxDistance, _layerMask, QueryTriggerInteraction.Ignore))
         {

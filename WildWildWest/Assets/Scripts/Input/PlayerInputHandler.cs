@@ -11,6 +11,7 @@ public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation
     private InputRun _inputRun;
     private InputAttack _inputAttack;
     private InputScroll _inputScroll;
+    private InputAim _inputAim;
 
     public Vector2 MoveDirection => _inputMove.MoveDirection;
     public Vector2 MouseRotation => _inputRotation.MouseRotation;
@@ -19,6 +20,8 @@ public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation
     public bool IsJump => _inputJump.IsJump;
     public bool IsRunning => _inputRun.IsRunning;
     public bool IsAttack => _inputAttack.IsAttack;
+
+    public bool IsAiming => _inputAim.IsAiming;
 
     public Vector2 ConsumeScrollDelta() =>
        _inputScroll.ConsumeScrollDelta();
@@ -29,7 +32,8 @@ public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation
     }
 
     [Inject]
-    private void Construct(InputMove inputMove, InputRotation inputRotation, InputJump inputJump, InputRun inputRun, InputAttack inputAttack, InputScroll inputScroll, PlayerInput inputActions)
+    private void Construct(InputMove inputMove, InputRotation inputRotation, InputJump inputJump, 
+        InputRun inputRun, InputAttack inputAttack, InputScroll inputScroll, PlayerInput inputActions, InputAim inputAim)
     {
         _inputMove = inputMove;
         _inputRotation = inputRotation;
@@ -38,5 +42,6 @@ public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation
         _inputAttack = inputAttack;
         _inputScroll = inputScroll;
         _playerInput = inputActions;
+        _inputAim = inputAim;
     }
 }

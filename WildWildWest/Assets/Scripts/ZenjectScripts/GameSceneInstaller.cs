@@ -15,6 +15,8 @@ public class GameSceneInstaller : MonoInstaller
         Container.Bind<InputRun>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputAttack>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputScroll>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<InputAim>().FromComponentInHierarchy().AsSingle();
+
         Container.Bind<IDamageable>().FromMethod(context => context.Container.Resolve<Player>().GetComponent<Health>()).AsCached();
 
         Container.Bind<PlayerInput>().AsSingle();

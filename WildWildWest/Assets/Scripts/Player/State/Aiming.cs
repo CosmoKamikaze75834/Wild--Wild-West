@@ -1,0 +1,54 @@
+using System;
+using UnityEngine;
+using Zenject;
+//изменение приближения при прицеливании
+public class Aiming : MonoBehaviour
+{
+    [SerializeField] private Camera _camera;
+    [SerializeField] private float _defaultFov;
+    [SerializeField] private float _aimFov;
+
+    private IWeaponInput _weaponInput;
+
+    private Vector3 _defaultCameraPosition;
+    private Vector3 _aimCameraPosition;
+
+    private bool _previousState;
+
+    public event Action<bool> OnAimStateChanged;
+
+    private void Start()
+    {
+        _defaultCameraPosition = _camera.transform.localPosition;
+        _aimCameraPosition = new Vector3(0.49f, _defaultCameraPosition.y, _defaultCameraPosition.z);
+    }
+
+    private void Update()
+    {
+        bool currentState = _weaponInput.IsAiming;
+
+        if (currentState != _previousState)//текущее состояние отличается от предыдущего?
+        {
+            OnAimStateChanged?.Invoke(currentState);
+            _previousState = currentState;
+
+        }
+
+        if (currentState)
+        {
+            _camera.fieldOfView = _aimFov;
+            _camera.transform.localPosition = _aimCameraPosition;
+        }
+        else
+        {
+            _camera.fieldOfView = _defaultFov;
+            _camera.transform.localPosition = _defaultCameraPosition;
+        }
+    }
+
+    [Inject]
+    private void Construct(IWeaponInput weaponInput)
+    {
+        _weaponInput = weaponInput;
+    }
+}

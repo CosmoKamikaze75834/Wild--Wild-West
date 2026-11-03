@@ -1,24 +1,16 @@
-using UnityEngine;
-
-public abstract class Window : MonoBehaviour
+public abstract class Window : UIVisibility
 {
-    [SerializeField] private CanvasGroup _windowGroup;
-
-    protected CanvasGroup WindowGroup => _windowGroup;
-
-    //открытие окна
-    public void Open()
+    public override void Open()
     {
-        _windowGroup.alpha = 1f;
-        _windowGroup.interactable = true;
-        _windowGroup.blocksRaycasts = true;//перехватывает райкаст
+        base.Open();
+        UIGroup.interactable = true;
+        UIGroup.blocksRaycasts = true;
     }
 
-    //закрытие
-    public void Close()
+    public override void Close()
     {
-        _windowGroup.alpha = 0f;
-        _windowGroup.interactable = false;
-        _windowGroup.blocksRaycasts = false;
+        base.Close();
+        UIGroup.interactable = false;
+        UIGroup.blocksRaycasts = false;
     }
 }
