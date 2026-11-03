@@ -1835,18 +1835,6 @@ MeshCollider:
   m_Convex: 0
   m_CookingOptions: 30
   m_Mesh: {fileID: 4300000, guid: c1398232607a704429e70027849c6fcc, type: 3}
---- !u!114 &53152907 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5013537060176795054, guid: d2461963ebf40264fbfef35a796e8487,
-    type: 3}
-  m_PrefabInstance: {fileID: 1194035012942569289}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 452f5a5c3cd01eb489af87620953bb80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &54433766 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1507122762242516, guid: 966b33e4a5f694f49b91126445255337,
@@ -9846,7 +9834,7 @@ MonoBehaviour:
   _maxDistance: 100
   _layerMask:
     serializedVersion: 2
-    m_Bits: 55
+    m_Bits: 311
 --- !u!4 &260159467
 Transform:
   m_ObjectHideFlags: 0
@@ -65836,7 +65824,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _movement: {fileID: 1142559478}
   _jumper: {fileID: 1142559481}
-  _cameraRotation: {fileID: 53152907}
+  _cameraRotation: {fileID: 0}
   _turner: {fileID: 1142559477}
   _runner: {fileID: 1142559482}
   _health: {fileID: 1512451141}
@@ -74457,7 +74445,8 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5013537060176795054, guid: d2461963ebf40264fbfef35a796e8487, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []

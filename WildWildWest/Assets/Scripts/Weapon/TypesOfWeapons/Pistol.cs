@@ -8,7 +8,7 @@ public class Pistol : Weapon
     {
         if (_launch.TryGetHit(out RaycastHit hitInfo))
         {
-            IDamageable target = hitInfo.collider.GetComponentInParent<IDamageable>();
+            IDamageable target = hitInfo.collider.GetComponentInChildren<IDamageable>();
 
             if (target != null)
                 ApplyDamage(target);

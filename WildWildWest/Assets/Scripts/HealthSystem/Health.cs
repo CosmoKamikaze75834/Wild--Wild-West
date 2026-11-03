@@ -7,9 +7,10 @@ public class Health : MonoBehaviour, IDamageable
     private const float MinHDamage = 0;
 
     [SerializeField, Min(1)] private float _maxHealth;
-    [SerializeField] public float _currentHealth;
+    [SerializeField] private float _currentHealth;
 
     public event Action OnDied;
+    public event Action OnDamaged;
 
     public void TakeDamage(float damage)
     {
@@ -20,6 +21,8 @@ public class Health : MonoBehaviour, IDamageable
             throw new ArgumentOutOfRangeException(nameof(damage));
 
         _currentHealth -= damage;
+
+        OnDamaged?.Invoke();
 
         if (IsDead())
         {
