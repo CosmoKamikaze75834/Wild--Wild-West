@@ -3,11 +3,12 @@ using UnityEngine;
 using DG.Tweening;
 using System.Collections;
 
-public class WaveAnnouncementView : MonoBehaviour
+public class GameAnnouncementView : MonoBehaviour
 {
     private const int Time = 2;
 
-    [SerializeField] private TextMeshProUGUI _textWave;
+    [SerializeField] private TextMeshProUGUI _text;
+
     [SerializeField] private RectTransform _rectTransform;
 
     [SerializeField] private float _numberDown;
@@ -23,9 +24,14 @@ public class WaveAnnouncementView : MonoBehaviour
         yield return ChangePosition(_numberUp).WaitForCompletion();
     }
 
-    public void Change(int numberWave)
+    public void ChangeTextWave(int numberWave)
     {
-        _textWave.text = $"Волна {numberWave}!\nПриготовься к бою";
+        _text.text = $"Волна {numberWave}!\nПриготовься к бою";
+    }
+
+    public void ChangeTextBoss()
+    {
+        _text.text = $"Появление босса!\nПриготовься к бою";
     }
 
     private Tween ChangePosition(float number)

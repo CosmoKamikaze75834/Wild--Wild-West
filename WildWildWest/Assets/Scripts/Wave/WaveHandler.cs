@@ -22,6 +22,7 @@ public class WaveHandler : MonoBehaviour
 
     public event Action AllWavesCompleted;
     public event Action<int> WaveStarted;//волна началась  и номер волны
+    public event Action BossStarted;
 
     private void OnEnable()
     {
@@ -72,6 +73,7 @@ public class WaveHandler : MonoBehaviour
     private async Task SpawnBossDelay(CancellationToken token)
     {
         await WaitAsync(_bossSpawnDelay, token);
+        BossStarted?.Invoke();
         _spawner.SpawnBoss();
     }
 
