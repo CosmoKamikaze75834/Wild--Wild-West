@@ -6,7 +6,9 @@ public class Enemy : MonoBehaviour
     [SerializeField] private EnemyNavigation _navigation;
     [SerializeField] private Health _health;
 
-    public event Action<Enemy> Died;
+    public event Action<Enemy, Vector3> Died;
+
+    public Vector3 EnemyPosition => _navigation.transform.position;
 
     private void OnEnable()
     {
@@ -34,6 +36,6 @@ public class Enemy : MonoBehaviour
     private void NotifyDeath()
     {
         Debug.Log("Умер");
-        Died?.Invoke(this);
+        Died?.Invoke(this, EnemyPosition);
     }
 }

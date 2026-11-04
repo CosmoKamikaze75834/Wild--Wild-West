@@ -34,7 +34,7 @@ public class EnemyPool
         _pool.Release(enemy);
     }
 
-    private void OnEnemyDied(Enemy enemy)
+    private void OnEnemyDied(Enemy enemy, UnityEngine.Vector3 position)
     {
         Release(enemy);
         EnemyDied?.Invoke(enemy);

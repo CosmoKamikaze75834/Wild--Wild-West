@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 5614595095245650180}
   - component: {fileID: 6799498305510851107}
   - component: {fileID: 703077171496422532}
+  - component: {fileID: 3940738944067363263}
   m_Layer: 8
   m_Name: Enemy
   m_TagString: Untagged
@@ -115,6 +116,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _health: {fileID: 7553185759055268635}
   _damageView: {fileID: 703077171496422532}
+  _enemy: {fileID: 6333896639478766622}
+  _deadView: {fileID: 3940738944067363263}
 --- !u!114 &703077171496422532
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -130,6 +133,19 @@ MonoBehaviour:
   _meshRenderer: {fileID: 5625149366845858588}
   _color: {r: 1, g: 0, b: 0, a: 0}
   _time: 0.5
+--- !u!114 &3940738944067363263
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3306136491353304097}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29e639692738a0f44939a43408e096a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _effect: {fileID: 4250298743439401353, guid: 184c47b8b8e4c814d8241a901f177515, type: 3}
 --- !u!1 &4937780655110017804
 GameObject:
   m_ObjectHideFlags: 0
