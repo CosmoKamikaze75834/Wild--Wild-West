@@ -35,7 +35,6 @@ public class Enemy : MonoBehaviour
 
     private void NotifyDeath()
     {
-        Debug.Log("Умер");
         Died?.Invoke(this, EnemyPosition);
     }
 }

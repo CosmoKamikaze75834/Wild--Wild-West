@@ -28,7 +28,7 @@ public class WaveHandler : MonoBehaviour
         _cancellationTokenSource = new CancellationTokenSource();
 
         _spawner.OnSpawn += _progress.OnEnemySpawned;
-        _spawner.EnemyDied += OnEnemyDied;
+        _spawner.EnemyDied += OnEnemyDied; 
         _spawner.BossDied += OnBossDied;
     }
 
@@ -94,8 +94,8 @@ public class WaveHandler : MonoBehaviour
     //5 - повторяет цикл пока не закончатся волны
     private async Task StartNextWaveAsync(CancellationToken token)
     {
-        WaveStarted?.Invoke(_currentWaveIndex);
         await WaitAsync(Random.Range(_minWaveDelay, _maxWaveDelay), token);
+        WaveStarted?.Invoke(_currentWaveIndex);
         await RunWaveAsync();
     }
 
