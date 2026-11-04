@@ -9,8 +9,11 @@ public class Health : MonoBehaviour, IDamageable
     [SerializeField, Min(1)] private float _maxHealth;
     [SerializeField] private float _currentHealth;
 
+    public float MaxHealth => _maxHealth;
+
     public event Action OnDied;
     public event Action OnDamaged;
+    public event Action<float> HealthChanged;
 
     public void TakeDamage(float damage)
     {
@@ -22,18 +25,21 @@ public class Health : MonoBehaviour, IDamageable
 
         _currentHealth -= damage;
 
+        if(_currentHealth < MinHealth)
+            _currentHealth = MinHealth;
+
+        HealthChanged?.Invoke(_currentHealth);
+
         OnDamaged?.Invoke();
 
         if (IsDead())
-        {
-            _currentHealth = MinHealth;
             OnDied?.Invoke();
-        }
     }
 
     public void Reset()
     {
         _currentHealth = _maxHealth;
+        HealthChanged?.Invoke(_currentHealth);
     }
 
     private bool IsDead()
