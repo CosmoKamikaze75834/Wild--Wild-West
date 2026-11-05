@@ -1,33 +1,17 @@
 using UnityEngine;
-using Zenject;
 
 public class DeathPlayer : MonoBehaviour
 {
-    private const float TimePlay = 0;
-
     [SerializeField] private Health _health;
-
-    private PlayerInputHandler _inputHandler;
+    [SerializeField] private GameplayPause _gameplayPause;
 
     private void OnEnable()
     {
-        _health.OnDied += EstablishPause;
+        _health.OnDied += _gameplayPause.EstablishPause;
     }
 
     private void OnDisable()
     {
-        _health.OnDied -= EstablishPause;
-    }
-
-    private void EstablishPause()
-    {
-        _inputHandler.DisablePlayerInput();
-        Time.timeScale = TimePlay;
-    }
-
-    [Inject]
-    private void Construct(PlayerInputHandler playerInput)
-    {
-        _inputHandler = playerInput;
+        _health.OnDied -= _gameplayPause.EstablishPause;
     }
 }

@@ -1,18 +1,39 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using Zenject;
 
-public class WindowVictory : MonoBehaviour
+public class WindowVictory : Window
 {
-    // Start is called before the first frame update
-    void Start()
+    [SerializeField] private Button _buttonMainMenu;
+
+    private SceneLoader _sceneLoader;
+    private GameplayPause _pause;
+
+    private void Start()
     {
-        
+        Close();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnEnable()
     {
-        
+        _buttonMainMenu.onClick.AddListener(OnMenuClicked);
+    }
+
+    private void OnDisable()
+    {
+        _buttonMainMenu.onClick.RemoveListener(OnMenuClicked);
+    }
+
+    private void OnMenuClicked()
+    {
+        _sceneLoader.Load("MainMenuScene");
+        _pause.CancelPause();
+    }
+
+    [Inject]
+    private void Construct(SceneLoader sceneLoader, GameplayPause gameplayPause)
+    {
+        _sceneLoader = sceneLoader;
+        _pause = gameplayPause;
     }
 }

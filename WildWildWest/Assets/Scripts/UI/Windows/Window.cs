@@ -1,3 +1,5 @@
+using UnityEngine;
+
 public abstract class Window : UIVisibility
 {
     public override void Open()
@@ -5,6 +7,7 @@ public abstract class Window : UIVisibility
         base.Open();
         UIGroup.interactable = true;
         UIGroup.blocksRaycasts = true;
+        Cursor.visible = true;
     }
 
     public override void Close()

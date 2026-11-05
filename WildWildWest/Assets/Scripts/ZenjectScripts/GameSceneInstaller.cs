@@ -25,5 +25,8 @@ public class GameSceneInstaller : MonoInstaller
         Container.Bind<Movement>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Jumper>().FromComponentInHierarchy().AsSingle();
         Container.Bind<Player>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<SceneLoader>().FromComponentInHierarchy().AsSingle();
+        Container.Bind<GameplayPause>().FromComponentInHierarchy().AsSingle();
     }
 }

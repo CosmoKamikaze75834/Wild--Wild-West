@@ -31,6 +31,11 @@ public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation
         _playerInput.Player.Disable();
     }
 
+    public void EnablePlayerInput()
+    {
+        _playerInput.Player.Enable();
+    }
+
     [Inject]
     private void Construct(InputMove inputMove, InputRotation inputRotation, InputJump inputJump, 
         InputRun inputRun, InputAttack inputAttack, InputScroll inputScroll, PlayerInput inputActions, InputAim inputAim)
