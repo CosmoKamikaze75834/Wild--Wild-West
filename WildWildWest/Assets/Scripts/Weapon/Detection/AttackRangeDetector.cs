@@ -5,16 +5,17 @@ public class AttackRangeDetector : MonoBehaviour
 {
     [SerializeField] private float _radiusFinder;
     [SerializeField] private Transform _pointFinder;
+    [SerializeField] private LayerMask _layerMask;
 
-    public List<Enemy> GetObjectsRadius()
+    public List<IDamageable> GetObjectsRadius()
     {
-        Collider[] colliders = Physics.OverlapSphere(_pointFinder.position, _radiusFinder);
+        Collider[] colliders = Physics.OverlapSphere(_pointFinder.position, _radiusFinder, _layerMask);
 
-        List<Enemy> enemies = new();
+        List<IDamageable> enemies = new();
 
         foreach (Collider collider in colliders)
         {
-            var enemy = collider.GetComponentInParent<Enemy>();
+            var enemy = collider.GetComponent<IDamageable>();
 
             if(enemy != null && !enemies.Contains(enemy))
                 enemies.Add(enemy);

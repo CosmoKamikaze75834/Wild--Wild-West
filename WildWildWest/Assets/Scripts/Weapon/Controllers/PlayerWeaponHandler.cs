@@ -10,6 +10,26 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private bool _wasAttackPressed;
 
+    private void OnEnable()
+    {
+        _animationPlayer.ShovelHit += HandleShovelHit;
+    }
+
+    private void OnDisable()
+    {
+        _animationPlayer.ShovelHit -= HandleShovelHit;
+    }
+
+    private void HandleShovelHit()
+    {
+        Weapon currentWeapon = _weaponSwitcher.CurrentWeapon;
+
+        if (currentWeapon is Shovel)
+        {
+            currentWeapon.Attack();
+        }
+    }
+
     private void Update()
     {
         _weaponSwitcher.SwitchWeapon(_weaponInput.ConsumeScrollDelta().y);
@@ -26,11 +46,12 @@ public class PlayerWeaponHandler : MonoBehaviour
             Weapon currentWeapon = _weaponSwitcher.CurrentWeapon;
 
             if (currentWeapon is Pistol)
+            {
                 _animationPlayer.TriggerAttackPistol();
-            else if(currentWeapon is Shovel)
+                currentWeapon.Attack();
+            }
+            else if (currentWeapon is Shovel)
                 _animationPlayer.TriggerAttackShovel();
-
-            currentWeapon.Attack();
         }
 
         _wasAttackPressed = isAttackPressed;

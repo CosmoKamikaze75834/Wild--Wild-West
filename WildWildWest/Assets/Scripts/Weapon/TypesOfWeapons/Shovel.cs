@@ -7,9 +7,9 @@ public class Shovel : Weapon
 
     public override void Attack()
     {
-        List<Enemy> enemies = _attackRangeDetector.GetObjectsRadius();
+        List<IDamageable> enemies = _attackRangeDetector.GetObjectsRadius();
 
         foreach (var item in enemies)
-            ApplyDamage((IDamageable)item);
+            ApplyDamage(item);
     }
 }
