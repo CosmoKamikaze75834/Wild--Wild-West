@@ -1,5 +1,3 @@
-using UnityEngine;
-
 public class EnemyMoveState : IEnemyState
 {
     private readonly TargetFollower _targetFollower;
@@ -12,11 +10,6 @@ public class EnemyMoveState : IEnemyState
     public void Enter()
     {
         _targetFollower.Resume();
-    }
-
-    public void Exit()
-    {
-
     }
 
     public void Update()

@@ -3,12 +3,11 @@ using UnityEngine;
 public class GameResultPresenter : MonoBehaviour
 {
     [SerializeField] private Health _health;
-    [SerializeField] private WindowDefeat _windowDefeat;
-
     [SerializeField] private WaveHandler _waveHandler;
-    [SerializeField] private WindowVictory _windowVictory;
-
     [SerializeField] private GameplayPause _playPause;
+
+    [SerializeField] private GameResultWindow _windowDefeat;
+    [SerializeField] private GameResultWindow _windowVictory;
 
     private void OnEnable()
     {

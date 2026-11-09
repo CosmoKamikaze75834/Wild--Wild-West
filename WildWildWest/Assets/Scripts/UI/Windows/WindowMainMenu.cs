@@ -30,7 +30,6 @@ public class WindowMainMenu : Window
     private void OnExitClicked()
     {
         Application.Quit();
-        Debug.Log("Вы вышли из игры");
     }
 
     [Inject]

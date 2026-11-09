@@ -4,7 +4,6 @@ using Zenject;
 public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation, IWeaponInput
 {
     private PlayerInput _playerInput;
-
     private InputMove _inputMove;
     private InputRotation _inputRotation;
     private InputJump _inputJump;
@@ -16,24 +15,21 @@ public class PlayerInputHandler : MonoBehaviour, IMotionControl, IMotionRotation
     public Vector2 MoveDirection => _inputMove.MoveDirection;
     public Vector2 MouseRotation => _inputRotation.MouseRotation;
     public Vector2 ScrollDelta => _inputScroll.ScrollDelta;
+    public Vector2 ConsumeScrollDelta => _inputScroll.ConsumeScrollDelta();
 
     public bool IsJump => _inputJump.IsJump;
     public bool IsRunning => _inputRun.IsRunning;
     public bool IsAttack => _inputAttack.IsAttack;
-
     public bool IsAiming => _inputAim.IsAiming;
-
-    public Vector2 ConsumeScrollDelta() =>
-       _inputScroll.ConsumeScrollDelta();
-
-    public void DisablePlayerInput()
-    {
-        _playerInput.Player.Disable();
-    }
 
     public void EnablePlayerInput()
     {
         _playerInput.Player.Enable();
+    }
+
+    public void DisablePlayerInput()
+    {
+        _playerInput.Player.Disable();
     }
 
     [Inject]

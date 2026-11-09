@@ -14,11 +14,6 @@ public class EnemyAttackState : IEnemyState
         _targetFollower.Stop();
     }
 
-    public void Exit()
-    {
-
-    }
-
     public void Update()
     {
         _attacker.Attack();

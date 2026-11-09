@@ -2,8 +2,10 @@ using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
-public class WindowDefeat : Window
+public class GameResultWindow : Window
 {
+    private const string SceneName = "MainMenuScene";
+
     [SerializeField] private Button _buttonMainMenu;
 
     private SceneLoader _sceneLoader;
@@ -26,7 +28,7 @@ public class WindowDefeat : Window
 
     private void OnMenuClicked()
     {
-        _sceneLoader.Load("MainMenuScene");
+        _sceneLoader.Load(SceneName);
         _pause.CancelPause();
     }
 

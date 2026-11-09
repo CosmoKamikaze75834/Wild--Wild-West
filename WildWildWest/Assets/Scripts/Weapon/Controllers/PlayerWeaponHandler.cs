@@ -6,7 +6,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     [SerializeField] private WeaponSwitcher _weaponSwitcher;
 
     private IWeaponInput _weaponInput;
-    private IAnimationPlayer _animationPlayer;
+    private IPlayerCombatAnimation _animationPlayer;
 
     private bool _wasAttackPressed;
 
@@ -32,7 +32,7 @@ public class PlayerWeaponHandler : MonoBehaviour
 
     private void Update()
     {
-        _weaponSwitcher.SwitchWeapon(_weaponInput.ConsumeScrollDelta().y);
+        _weaponSwitcher.SwitchWeapon(_weaponInput.ConsumeScrollDelta.y);
 
         HandleAttack();
     }
@@ -58,7 +58,7 @@ public class PlayerWeaponHandler : MonoBehaviour
     }
 
     [Inject]
-    private void Construct(IWeaponInput weaponInput, IAnimationPlayer animationPlayer)
+    private void Construct(IWeaponInput weaponInput, IPlayerCombatAnimation animationPlayer)
     {
         _weaponInput = weaponInput;
         _animationPlayer = animationPlayer;

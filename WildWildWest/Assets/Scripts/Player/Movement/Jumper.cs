@@ -7,7 +7,7 @@ public class Jumper : MonoBehaviour
     [SerializeField] private float _jumpForce = 5f;
 
     private IMotionControl _motionControl;
-    private IAnimationPlayer _animationPlayer;
+    private IPlayerMovementAnimation _animationPlayer;
 
     private Vector3 _verticalVelocity;
 
@@ -19,7 +19,6 @@ public class Jumper : MonoBehaviour
         {
             if (_motionControl.IsJump && _canJump)
             {
-                Debug.Log("Прыжок");
                 _verticalVelocity = Vector3.up * _jumpForce;
                 _animationPlayer.UpdateJumpState(true);
                 _canJump = false;
@@ -42,7 +41,7 @@ public class Jumper : MonoBehaviour
     }
 
     [Inject]
-    private void Construct(IMotionControl motionControl, IAnimationPlayer animationPlayer)
+    private void Construct(IMotionControl motionControl, IPlayerMovementAnimation animationPlayer)
     {
         _motionControl = motionControl;
         _animationPlayer = animationPlayer;

@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class PlayerAnimationHandler : AnimationHandlerBase, IAnimationPlayer
+public class PlayerAnimationHandler : AnimationHandlerBase, IPlayerMovementAnimation, IPlayerCombatAnimation
 {
     private static readonly int Speed = Animator.StringToHash(nameof(Speed));
     private static readonly int IsJump = Animator.StringToHash(nameof(IsJump));

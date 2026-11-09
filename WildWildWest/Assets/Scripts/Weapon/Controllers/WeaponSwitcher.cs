@@ -1,7 +1,7 @@
 using System;
 using UnityEngine;
 
-public class WeaponSwitcher : MonoBehaviour
+public class WeaponSwitcher : MonoBehaviour, IWeaponSelectionNotifier
 {
     [SerializeField] private Weapon[] _weapons;
 

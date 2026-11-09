@@ -10,16 +10,19 @@ public class Spawner : MonoBehaviour
     [SerializeField] private Enemy _bossPrefab;
     [SerializeField] private Transform[] _pointsSpawn;
 
-    [SerializeField] private int _poolCapacity = 5;
-    [SerializeField] private int _poolMaxSize = 5;
+    [SerializeField] private int _poolCapacityEnemy = 5;
+    [SerializeField] private int _poolMaxSizeEnemy = 5;
+
+    [SerializeField] private int _poolCapacityBoss = 1;
+    [SerializeField] private int _poolMaxSizeBoss = 1;
 
     private EnemyPool _enemyPool;
     private EnemyPool _bossPool;
 
     private DiContainer _container;
 
-    private CancellationTokenSource _cancellationTokenSource;//позволяет запросить отмену операции
-    private Task _spawnTask;//выполненная или завершённая асинхрон. операция
+    private CancellationTokenSource _cancellationTokenSource;
+    private Task _spawnTask;
 
     public event Action<Enemy> OnSpawn;
     public event Action<Enemy> EnemyDied;
@@ -27,8 +30,8 @@ public class Spawner : MonoBehaviour
 
     private void Awake()
     {
-        _enemyPool = new EnemyPool(_enemyPrefab, _container, _poolCapacity, _poolMaxSize);
-        _bossPool = new EnemyPool(_bossPrefab, _container, 1, 1);
+        _enemyPool = new EnemyPool(_enemyPrefab, _container, _poolCapacityEnemy, _poolMaxSizeEnemy);
+        _bossPool = new EnemyPool(_bossPrefab, _container, _poolCapacityBoss, _poolMaxSizeBoss);
 
         _enemyPool.EnemyDied += OnEnemyDied;
         _bossPool.EnemyDied += OnBossDied;
@@ -44,8 +47,7 @@ public class Spawner : MonoBehaviour
 
         try
         {
-            //сохраняем задачу чтобы отслеживать её выполнение
-            _spawnTask = SpawnEnemiesAsync(enemyCount, enemySpawnInterval, source.Token);//запуск метода создания обычных врагов
+            _spawnTask = SpawnEnemiesAsync(enemyCount, enemySpawnInterval, source.Token);
             await _spawnTask;
         }
         finally
@@ -69,7 +71,7 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < enemyCount; i++)
         {
-            cancellationToken.ThrowIfCancellationRequested();//не запрошена ли отмена?
+            cancellationToken.ThrowIfCancellationRequested();
 
             if (TrySpawn(_enemyPool, out Enemy enemy))
                 OnSpawn?.Invoke(enemy);
@@ -111,11 +113,6 @@ public class Spawner : MonoBehaviour
         BossDied?.Invoke(boss);
     }
 
-    [Inject]
-    private void Construct(DiContainer container)
-    {
-        _container = container;
-    }
 
     private void OnDestroy()
     {
@@ -126,5 +123,11 @@ public class Spawner : MonoBehaviour
 
         if (_bossPool != null)
             _bossPool.EnemyDied -= OnBossDied;
+    }
+
+    [Inject]
+    private void Construct(DiContainer container)
+    {
+        _container = container;
     }
 }

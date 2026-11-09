@@ -7,7 +7,9 @@ public class GameSceneInstaller : MonoInstaller
     {
         Container.BindInterfacesAndSelfTo<PlayerInputHandler>().FromComponentInHierarchy().AsSingle();
 
-        Container.Bind<IAnimationPlayer>().To<PlayerAnimationHandler>().FromComponentInHierarchy().AsSingle();
+        Container.Bind(typeof(IPlayerMovementAnimation), typeof(IPlayerCombatAnimation)).To<PlayerAnimationHandler>().FromComponentInHierarchy().AsSingle();
+
+        Container.Bind<IWeaponSelectionNotifier>().To<WeaponSwitcher>().FromComponentInHierarchy().AsSingle();
 
         Container.Bind<InputMove>().FromComponentInHierarchy().AsSingle();
         Container.Bind<InputRotation>().FromComponentInHierarchy().AsSingle();

@@ -7,7 +7,6 @@ public class WeaponAnimationEvents : MonoBehaviour
 
     public void OnShovelHit()
     {
-        Debug.Log("Наносим урон");
         ShovelHit?.Invoke();
     }
 }

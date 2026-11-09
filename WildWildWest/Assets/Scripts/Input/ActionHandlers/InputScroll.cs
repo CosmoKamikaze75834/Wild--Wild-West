@@ -7,9 +7,6 @@ public class InputScroll : InputActionHandler
 
     protected override InputAction Action => Input.Player.WeaponScroll;
 
-    protected override void OnAction(InputAction.CallbackContext context) =>
-        ScrollDelta = context.ReadValue<Vector2>();
-
     public Vector2 ConsumeScrollDelta()
     {
         var currentValue = ScrollDelta;
@@ -18,4 +15,7 @@ public class InputScroll : InputActionHandler
 
         return currentValue;
     }
+
+    protected override void OnAction(InputAction.CallbackContext context) =>
+        ScrollDelta = context.ReadValue<Vector2>();
 }

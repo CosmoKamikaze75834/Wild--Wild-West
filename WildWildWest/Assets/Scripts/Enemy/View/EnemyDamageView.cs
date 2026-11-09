@@ -3,15 +3,16 @@ using UnityEngine;
 
 public class EnemyDamageView : MonoBehaviour
 {
+    private const float DamageDuration = 1f;
     private const string ColorProperty = "_Color";
 
     [SerializeField] private SkinnedMeshRenderer _meshRenderer;
-    [SerializeField] private Color _color;
-    [SerializeField] private float _time = 1f;
+    [SerializeField] private Color _damageColor;
 
     private MaterialPropertyBlock _propertyBlock;
     private Color _originalColor;
     private Coroutine _currentCoroutine;
+    private WaitForSeconds _damageDelay = new WaitForSeconds(DamageDuration);
 
     private void Awake()
     {
@@ -29,9 +30,9 @@ public class EnemyDamageView : MonoBehaviour
 
     private IEnumerator ChangeColor()
     {
-        SetColor(_color);
+        SetColor(_damageColor);
 
-        yield return new WaitForSeconds(_time);
+        yield return _damageDelay;
 
         SetColor(_originalColor);
         _currentCoroutine = null;

@@ -7,7 +7,8 @@ public class Health : MonoBehaviour, IDamageable
     private const float MinHDamage = 0;
 
     [SerializeField, Min(1)] private float _maxHealth;
-    [SerializeField] private float _currentHealth;
+    
+    private float _currentHealth;
 
     public float MaxHealth => _maxHealth;
 

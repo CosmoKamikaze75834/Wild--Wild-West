@@ -9534,8 +9534,10 @@ MonoBehaviour:
   - {fileID: 1278783865}
   - {fileID: 77687295}
   - {fileID: 1849071312}
-  _poolCapacity: 5
-  _poolMaxSize: 5
+  _poolCapacityEnemy: 5
+  _poolMaxSizeEnemy: 5
+  _poolCapacityBoss: 1
+  _poolMaxSizeBoss: 1
 --- !u!1001 &250155233
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21255,18 +21257,6 @@ Camera:
     type: 3}
   m_PrefabInstance: {fileID: 1194035012942569289}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &608949611 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 4599765126376568255, guid: d2461963ebf40264fbfef35a796e8487,
-    type: 3}
-  m_PrefabInstance: {fileID: 1194035012942569289}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 452f5a5c3cd01eb489af87620953bb80, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &612782765 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1049582194987082, guid: 85747183fe8642241a5a463a25b7c2e7,
@@ -30548,10 +30538,10 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _health: {fileID: 1512451141}
-  _windowDefeat: {fileID: 1118457634}
   _waveHandler: {fileID: 747210269}
-  _windowVictory: {fileID: 1261416389}
   _playPause: {fileID: 1648622780}
+  _windowDefeat: {fileID: 1118457634}
+  _windowVictory: {fileID: 1261416392}
 --- !u!1001 &878512347
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -38552,7 +38542,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1118457630}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1039c3bd1a3b11441811906ad66143ca, type: 3}
+  m_Script: {fileID: 11500000, guid: 7b5a0ac807432774d9a6b23d4755c120, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   _canvasGroup: {fileID: 1118457633}
@@ -39257,18 +39247,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 596695b1ab97c5b4a9a4bd7d0e3119e0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1142559478 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9098246155069478267, guid: d2461963ebf40264fbfef35a796e8487,
-    type: 3}
-  m_PrefabInstance: {fileID: 1194035012942569289}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 13d92e0d980ae6f44ab9ec4b202d618d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1142559481 stripped
@@ -43612,8 +43590,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1261416390}
-  - component: {fileID: 1261416389}
   - component: {fileID: 1261416391}
+  - component: {fileID: 1261416392}
   m_Layer: 5
   m_Name: VictoryScreen
   m_TagString: Untagged
@@ -43621,20 +43599,6 @@ GameObject:
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1261416389
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1261416388}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a4212d77b4fae14438882f97dae3916c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _canvasGroup: {fileID: 1261416391}
-  _buttonMainMenu: {fileID: 68150425}
 --- !u!224 &1261416390
 RectTransform:
   m_ObjectHideFlags: 0
@@ -43668,6 +43632,20 @@ CanvasGroup:
   m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
+--- !u!114 &1261416392
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1261416388}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b5a0ac807432774d9a6b23d4755c120, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _canvasGroup: {fileID: 1261416391}
+  _buttonMainMenu: {fileID: 68150425}
 --- !u!1001 &1262699811
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48633,7 +48611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waveHandler: {fileID: 747210269}
-  _waveView: {fileID: 524996054}
+  _announcementView: {fileID: 0}
 --- !u!1 &1402701367 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1455539221915078, guid: 4ff69948dc40dcc4c9649855f6c289dc,
@@ -66871,9 +66849,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae7938c4d618f124b976e68a08457e49, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _movement: {fileID: 1142559478}
   _jumper: {fileID: 1142559481}
-  _cameraRotation: {fileID: 608949611}
   _turner: {fileID: 1142559477}
   _runner: {fileID: 1142559482}
   _health: {fileID: 1512451141}

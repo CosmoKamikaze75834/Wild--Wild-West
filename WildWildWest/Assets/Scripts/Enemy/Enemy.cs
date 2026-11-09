@@ -20,7 +20,6 @@ public class Enemy : MonoBehaviour
         _health.OnDied -= NotifyDeath;
     }
 
-    //успешно ли переместился враг в точку спавна?
     public bool SpawnAt(Vector3 position)
     {
         if(!_navigation.Warp(position))

@@ -1,7 +1,7 @@
 using UnityEngine;
 using Zenject;
 
-public class StateEntity : MonoBehaviour
+public class EnemyStateMachine : MonoBehaviour
 {
     [SerializeField] private AttackRangeChecker _rangeChecker;
 
@@ -22,9 +22,6 @@ public class StateEntity : MonoBehaviour
         _rangeChecker.OnTargetEnteredRange -= LaunchAttack;
         _rangeChecker.OnTargetExitedRange -= LaunchMove;
 
-        if (_currentState != null)
-            _currentState.Exit();
-
         _currentState = null;
     }
 
@@ -44,16 +41,13 @@ public class StateEntity : MonoBehaviour
         ChangeState(_attackState);
     }
 
-    //переключаемые состо€ни€
     private void ChangeState(IEnemyState newState)
     {
-        //чтобы не переключатьс€ повторно
         if (_currentState == newState)
             return;
 
-        _currentState?.Exit();//завершаем предыдущее состо€ние если оно существует
-        _currentState = newState;//устанавливаем новое состо€ние
-        _currentState.Enter();//запускаем действие при входе в него
+        _currentState = newState;
+        _currentState.Enter();
     }
 
     [Inject]
