@@ -36,13 +36,13 @@ public class Movement : MonoBehaviour
 
         float directionMovement = Vector3.Dot(playerInput, forward);
 
-        _animationPlayer.EstablishForwardDirection(directionMovement);
+        _animationPlayer.UpdateForwardDirection(directionMovement);
 
         playerInput.y = verticalVelocity.y;
 
         _controller.Move(playerInput * Time.deltaTime);
 
-        _animationPlayer.EstablishSpeed(input.magnitude);
+        _animationPlayer.UpdateSpeed(input.magnitude);
     }
 
     public void ChangeSpeed(float speed)

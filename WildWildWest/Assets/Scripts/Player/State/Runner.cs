@@ -13,12 +13,12 @@ public class Runner : MonoBehaviour
         if (_motionControl.IsRunning)
         {
             movement.ChangeSpeed(_maxSpeed);//изменяется скорость на макс
-            _animationPlayer.EstablishRun(true);
+            _animationPlayer.UpdateRunState(true);
         }
         else
         {
             movement.ChangeSpeed(movement.DefaultSpeed);
-            _animationPlayer.EstablishRun(false);
+            _animationPlayer.UpdateRunState(false);
         }
     }
 

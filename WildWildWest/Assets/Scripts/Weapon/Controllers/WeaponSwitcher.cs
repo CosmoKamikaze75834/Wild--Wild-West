@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class WeaponSwitcher : MonoBehaviour
@@ -8,6 +9,8 @@ public class WeaponSwitcher : MonoBehaviour
 
     public int CurrentWeaponIndex => _currentWeaponIndex;
     public Weapon CurrentWeapon => _weapons[_currentWeaponIndex];
+
+    public event Action<Weapon> WeaponChanged;
 
     private void Start()
     {
@@ -32,5 +35,7 @@ public class WeaponSwitcher : MonoBehaviour
     {
         for (int i = 0; i < _weapons.Length; i++)
             _weapons[i].gameObject.SetActive(i == _currentWeaponIndex);
+
+            WeaponChanged?.Invoke(CurrentWeapon);
     }
 }

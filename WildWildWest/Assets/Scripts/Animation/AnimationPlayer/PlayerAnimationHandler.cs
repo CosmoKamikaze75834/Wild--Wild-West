@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class PlayerAnimationHandler : AnimationHandlerBase, IAnimationPlayer
 {
-    [SerializeField] private WeaponAnimationEvents _animationEvents;
-
     private static readonly int Speed = Animator.StringToHash(nameof(Speed));
     private static readonly int IsJump = Animator.StringToHash(nameof(IsJump));
     private static readonly int IsRun = Animator.StringToHash(nameof(IsRun));
     private static readonly int ShootPistol = Animator.StringToHash(nameof(ShootPistol));
     private static readonly int AttackShovel = Animator.StringToHash(nameof(AttackShovel));
     private static readonly int ForwardDirection = Animator.StringToHash(nameof(ForwardDirection));
+
+    [SerializeField] private WeaponAnimationEvents _animationEvents;
 
     public event Action ShovelHit;
 
@@ -24,27 +24,22 @@ public class PlayerAnimationHandler : AnimationHandlerBase, IAnimationPlayer
         _animationEvents.ShovelHit -= HandleShovelHit;
     }
 
-    private void HandleShovelHit()
-    {
-        ShovelHit?.Invoke();
-    }
-
-    public void EstablishSpeed(float movement)
+    public void UpdateSpeed(float movement)
     {
         _animator.SetFloat(Speed, Mathf.Abs(movement));
     }
 
-    public void EstablishForwardDirection(float direction)
+    public void UpdateForwardDirection(float direction)
     {
         _animator.SetFloat(ForwardDirection, direction);
     }
 
-    public void EstablishJump(bool isJumping)
+    public void UpdateJumpState(bool isJumping)
     {
         _animator.SetBool(IsJump, isJumping);
     }
 
-    public void EstablishRun(bool isRunning)
+    public void UpdateRunState(bool isRunning)
     {
         _animator.SetBool(IsRun, isRunning);
     }
@@ -57,5 +52,10 @@ public class PlayerAnimationHandler : AnimationHandlerBase, IAnimationPlayer
     public void TriggerAttackShovel()
     {
         _animator.SetTrigger(AttackShovel);
+    }
+
+    private void HandleShovelHit()
+    {
+        ShovelHit?.Invoke();
     }
 }

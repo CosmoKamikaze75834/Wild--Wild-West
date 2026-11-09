@@ -2,10 +2,10 @@ using System;
 
 public interface IAnimationPlayer
 {
-    void EstablishSpeed(float movement);
-    void EstablishForwardDirection(float direction);
-    void EstablishJump(bool isJumping);
-    void EstablishRun(bool isRunning);
+    void UpdateSpeed(float movement);
+    void UpdateForwardDirection(float direction);
+    void UpdateJumpState(bool isJumping);
+    void UpdateRunState(bool isRunning);
 
     public void TriggerAttackPistol();
     public void TriggerAttackShovel();

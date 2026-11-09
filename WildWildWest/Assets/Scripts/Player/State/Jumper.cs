@@ -19,14 +19,15 @@ public class Jumper : MonoBehaviour
         {
             if (_motionControl.IsJump && _canJump)
             {
+                Debug.Log("Прыжок");
                 _verticalVelocity = Vector3.up * _jumpForce;
-                _animationPlayer.EstablishJump(true);
+                _animationPlayer.UpdateJumpState(true);
                 _canJump = false;
             }
             else
             {
                 _verticalVelocity = Vector3.down;
-                _animationPlayer.EstablishJump(false);
+                _animationPlayer.UpdateJumpState(false);
                 if (!_motionControl.IsJump)
                     _canJump = true;
             }
@@ -34,7 +35,6 @@ public class Jumper : MonoBehaviour
         else
         {
             _verticalVelocity += Physics.gravity * Time.deltaTime * _gravityFactor;
-            _animationPlayer.EstablishJump(true);
             _canJump = false;
         }
 
