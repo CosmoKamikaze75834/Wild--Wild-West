@@ -20,6 +20,18 @@ public class EnemyDamageView : MonoBehaviour
         _originalColor = _meshRenderer.sharedMaterial.GetColor(ColorProperty);
     }
 
+    private void OnDisable()
+    {
+        if (_currentCoroutine != null)
+        {
+            StopCoroutine(_currentCoroutine);
+            _currentCoroutine = null;
+        }
+
+        if (_propertyBlock != null)
+            SetColor(_originalColor);
+    }
+
     public void ShowDamage()
     {
         if (_currentCoroutine != null)
@@ -43,17 +55,5 @@ public class EnemyDamageView : MonoBehaviour
         _meshRenderer.GetPropertyBlock(_propertyBlock);
         _propertyBlock.SetColor(ColorProperty, color);
         _meshRenderer.SetPropertyBlock(_propertyBlock);
-    }
-
-    private void OnDisable()
-    {
-        if (_currentCoroutine != null)
-        {
-            StopCoroutine(_currentCoroutine);
-            _currentCoroutine = null;
-        }
-
-        if (_propertyBlock != null)
-            SetColor(_originalColor);
     }
 }
