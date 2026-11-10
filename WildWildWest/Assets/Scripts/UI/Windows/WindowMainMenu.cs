@@ -1,10 +1,11 @@
-//обрабатывает нажатие кнопки Play
 using UnityEngine;
 using UnityEngine.UI;
 using Zenject;
 
 public class WindowMainMenu : Window
 {
+    private const string SceneName = "LoadingScene";
+
     [SerializeField] private Button _buttonPlay;
     [SerializeField] private Button _buttonExit;
 
@@ -24,7 +25,7 @@ public class WindowMainMenu : Window
 
     private void OnPlayClicked()
     {
-        _sceneLoader.Load("LoadingScene");
+        _sceneLoader.Load(SceneName);
     }
 
     private void OnExitClicked()

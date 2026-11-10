@@ -1,13 +1,14 @@
-using UnityEngine;
 using Zenject;
 
 public class WindowLoading : Window
 {
+    private const string SceneName = "GameplayScene";
+
     private SceneLoader _sceneLoader;
 
     private void Start()
     {
-        StartCoroutine(_sceneLoader.LoadAsync("GameplayScene"));
+        StartCoroutine(_sceneLoader.LoadAsync(SceneName));
     }
 
     [Inject]

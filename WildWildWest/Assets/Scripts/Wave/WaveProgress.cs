@@ -1,11 +1,12 @@
-//Учёт погибших и появившихся врагов
 public class WaveProgress
 {
+    private const int InitialEnemyCount = 0;
+
     private int _spawnedEnemyCount;
     private int _deadEnemyCount;
 
-    private bool _isSpawningCompleted;//спавнер закончил создание обычных врагов?
-    private bool _isBossScheduled;//запланировано ли появление босса?
+    private bool _isSpawningCompleted;
+    private bool _isBossScheduled;
 
     public void OnEnemySpawned(Enemy enemy)
     {
@@ -19,8 +20,8 @@ public class WaveProgress
 
     public void Reset()
     {
-        _spawnedEnemyCount = 0;
-        _deadEnemyCount = 0;
+        _spawnedEnemyCount = InitialEnemyCount;
+        _deadEnemyCount = InitialEnemyCount;
 
         _isSpawningCompleted = false;
         _isBossScheduled = false;

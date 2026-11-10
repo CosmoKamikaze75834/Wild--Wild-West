@@ -15,9 +15,7 @@ public class AttackRangeDetector : MonoBehaviour
 
         foreach (Collider collider in colliders)
         {
-            var enemy = collider.GetComponent<IDamageable>();
-
-            if(enemy != null && !enemies.Contains(enemy))
+            if (collider.TryGetComponent(out IDamageable enemy) && !enemies.Contains(enemy))
                 enemies.Add(enemy);
         }
 
@@ -26,7 +24,7 @@ public class AttackRangeDetector : MonoBehaviour
 
     private void OnDrawGizmos()
     {
-        Color color = Color.red;
+        Gizmos.color = Color.red;
         Gizmos.DrawWireSphere(_pointFinder.position, _radiusFinder);
     }
 }

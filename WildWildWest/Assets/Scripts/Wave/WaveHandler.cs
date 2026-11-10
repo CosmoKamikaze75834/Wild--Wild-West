@@ -4,7 +4,6 @@ using System.Threading.Tasks;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-//управляет последовательностью волн
 public class WaveHandler : MonoBehaviour
 {
     [SerializeField] private Wave[] _wave;
@@ -13,15 +12,14 @@ public class WaveHandler : MonoBehaviour
 
     private readonly WaveProgress _progress = new WaveProgress();
 
-    private int _maxWaveDelay = 15;
-    private int _minWaveDelay = 7;
-
+    private int _maxWaveDelay = 7;
+    private int _minWaveDelay = 4;
     private int _currentWaveIndex;
 
     private CancellationTokenSource _cancellationTokenSource;
 
     public event Action AllWavesCompleted;
-    public event Action<int> WaveStarted;//волна началась  и номер волны
+    public event Action<int> WaveStarted;
     public event Action BossStarted;
 
     private void OnEnable()
@@ -54,22 +52,19 @@ public class WaveHandler : MonoBehaviour
         _ = ExecuteSafelyAsync(() => StartNextWaveAsync(_cancellationTokenSource.Token));
     }
 
-    //1 - запускает обычных врагов
     private async Task RunWaveAsync()
     {
-        await _spawner.StartSpawning(_wave[_currentWaveIndex].EnemyCount, _wave[_currentWaveIndex].EnemySpawnInterval);//запуск волны
+        await _spawner.StartSpawning(_wave[_currentWaveIndex].EnemyCount, _wave[_currentWaveIndex].EnemySpawnInterval);
         _progress.MarkSpawningCompleted();
         CheckWaveCompletion();
     }
 
-    //2 - все враги созданы и погибли?
     private void CheckWaveCompletion()
     {
         if (_progress.TryScheduleBoss())
             _ = ExecuteSafelyAsync(() => SpawnBossDelay(_cancellationTokenSource.Token));
     }
 
-    //3 - ожидание .. и появление босса
     private async Task SpawnBossDelay(CancellationToken token)
     {
         await WaitAsync(_bossSpawnDelay, token);
@@ -77,7 +72,6 @@ public class WaveHandler : MonoBehaviour
         _spawner.SpawnBoss();
     }
 
-    //4 - првоерка следующей волны и сброс состояния
     private void OnBossDied(Enemy enemy)
     {
         _currentWaveIndex++;
@@ -93,7 +87,6 @@ public class WaveHandler : MonoBehaviour
         _ = ExecuteSafelyAsync(() => StartNextWaveAsync(_cancellationTokenSource.Token));
     }
 
-    //5 - повторяет цикл пока не закончатся волны
     private async Task StartNextWaveAsync(CancellationToken token)
     {
         await WaitAsync(Random.Range(_minWaveDelay, _maxWaveDelay), token);
@@ -104,7 +97,7 @@ public class WaveHandler : MonoBehaviour
     private void OnEnemyDied(Enemy enemy)
     {
         _progress.OnEnemyDied(enemy);
-        CheckWaveCompletion();//проверка условия перехода к боссу
+        CheckWaveCompletion();
     }
 
     private async Task WaitAsync(float delay, CancellationToken token)

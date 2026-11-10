@@ -8,7 +8,6 @@ public abstract class Weapon : MonoBehaviour
 
     public abstract void Attack();
 
-    //передача урона цели
     protected void ApplyDamage(IDamageable target)
     {
         if (target == null)

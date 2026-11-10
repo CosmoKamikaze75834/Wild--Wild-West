@@ -20,21 +20,19 @@ public class PlayerWeaponHandler : MonoBehaviour
         _animationPlayer.ShovelHit -= HandleShovelHit;
     }
 
-    private void HandleShovelHit()
-    {
-        Weapon currentWeapon = _weaponSwitcher.CurrentWeapon;
-
-        if (currentWeapon is Shovel)
-        {
-            currentWeapon.Attack();
-        }
-    }
-
     private void Update()
     {
         _weaponSwitcher.SwitchWeapon(_weaponInput.ConsumeScrollDelta.y);
 
         HandleAttack();
+    }
+
+    private void HandleShovelHit()
+    {
+        Weapon currentWeapon = _weaponSwitcher.CurrentWeapon;
+
+        if (currentWeapon is Shovel)
+            currentWeapon.Attack();
     }
 
     private void HandleAttack()

@@ -12,6 +12,5 @@ public class EnemyInstaller : MonoInstaller
 
         Container.Bind<EnemyMoveState>().AsSingle();
         Container.Bind<EnemyAttackState>().AsSingle();
-
     }
 }

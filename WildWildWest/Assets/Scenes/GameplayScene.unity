@@ -18555,7 +18555,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 1}
   m_AnchorMax: {x: 0.5, y: 1}
-  m_AnchoredPosition: {x: 0, y: 205.1}
+  m_AnchoredPosition: {x: 0, y: 250}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &524996052
@@ -18670,9 +18670,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _text: {fileID: 524996052}
   _rectTransform: {fileID: 524996051}
-  _numberDown: -69.1
-  _numberUp: 205.1
-  _duration: 3
+  _visibleYPosition: -60
+  _hiddenYPosition: 205
+  _moveDuration: 3
 --- !u!1001 &526353622
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -48611,7 +48611,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _waveHandler: {fileID: 747210269}
-  _announcementView: {fileID: 0}
+  _announcementView: {fileID: 524996054}
 --- !u!1 &1402701367 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1455539221915078, guid: 4ff69948dc40dcc4c9649855f6c289dc,
@@ -69696,7 +69696,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 118.43}
-  m_SizeDelta: {x: 881.8, y: 730.4}
+  m_SizeDelta: {x: 996.8, y: 762.7}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1982045877
 MonoBehaviour:
