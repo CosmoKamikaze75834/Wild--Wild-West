@@ -24,7 +24,7 @@ public class Spawner : MonoBehaviour
     private CancellationTokenSource _cancellationTokenSource;
     private Task _spawnTask;
 
-    public event Action<Enemy> OnSpawn;
+    public event Action<Enemy> Spawn;
     public event Action<Enemy> EnemyDied;
     public event Action<Enemy> BossDied;
 
@@ -74,7 +74,7 @@ public class Spawner : MonoBehaviour
             cancellationToken.ThrowIfCancellationRequested();
 
             if (TrySpawn(_enemyPool, out Enemy enemy))
-                OnSpawn?.Invoke(enemy);
+                Spawn?.Invoke(enemy);
 
             if (i < enemyCount - 1)
                 await Task.Delay(TimeSpan.FromSeconds(enemySpawnInterval), cancellationToken);

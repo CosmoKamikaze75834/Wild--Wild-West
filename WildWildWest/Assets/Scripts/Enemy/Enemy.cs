@@ -12,12 +12,12 @@ public class Enemy : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.OnDied += NotifyDeath;
+        _health.Died += NotifyDeath;
     }
 
     private void OnDisable()
     {
-        _health.OnDied -= NotifyDeath;
+        _health.Died -= NotifyDeath;
     }
 
     public bool SpawnAt(Vector3 position)

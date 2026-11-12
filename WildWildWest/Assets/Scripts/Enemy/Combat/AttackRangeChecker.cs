@@ -7,15 +7,15 @@ public class AttackRangeChecker : MonoBehaviour
 
     public bool IsTargetInRange => _isTargetInRange;
 
-    public event Action OnTargetEnteredRange;
-    public event Action OnTargetExitedRange;
+    public event Action TargetEnteredRange;
+    public event Action TargetExitedRange;
 
     private void OnTriggerEnter(Collider other)
     {
         if (IsPlayer(other))
         {
             _isTargetInRange = true;
-            OnTargetEnteredRange?.Invoke();
+            TargetEnteredRange?.Invoke();
         }
     }
 
@@ -24,7 +24,7 @@ public class AttackRangeChecker : MonoBehaviour
         if (IsPlayer(other))
         {
             _isTargetInRange = false;
-            OnTargetExitedRange?.Invoke();
+            TargetExitedRange?.Invoke();
         }
     }
 

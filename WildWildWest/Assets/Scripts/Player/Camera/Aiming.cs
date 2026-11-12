@@ -4,6 +4,8 @@ using Zenject;
 
 public class Aiming : MonoBehaviour
 {
+    private const float AimCameraXPosition = 0.49f;
+
     [SerializeField] private Camera _camera;
     [SerializeField] private float _defaultFov;
     [SerializeField] private float _aimFov;
@@ -17,12 +19,12 @@ public class Aiming : MonoBehaviour
     private bool _previousState;
     private bool _canAim;
 
-    public event Action<bool> OnAimStateChanged;
+    public event Action<bool> AimStateChanged;
 
     private void Start()
     {
         _defaultCameraPosition = _camera.transform.localPosition;
-        _aimCameraPosition = new Vector3(0.49f, _defaultCameraPosition.y, _defaultCameraPosition.z);
+        _aimCameraPosition = new Vector3(AimCameraXPosition, _defaultCameraPosition.y, _defaultCameraPosition.z);
     }
 
     private void OnEnable()
@@ -41,7 +43,7 @@ public class Aiming : MonoBehaviour
 
         if (currentState != _previousState)
         {
-            OnAimStateChanged?.Invoke(currentState);
+            AimStateChanged?.Invoke(currentState);
             _previousState = currentState;
         }
 

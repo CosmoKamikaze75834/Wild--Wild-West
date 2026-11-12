@@ -1,27 +1,15 @@
+using System.Collections.Generic;
 using UnityEngine;
 using Zenject;
 
 public class EnemyStateMachine : MonoBehaviour
 {
-    [SerializeField] private AttackRangeChecker _rangeChecker;
-
     private IEnemyState _currentState;
-    private IEnemyState _moveState;
-    private IEnemyState _attackState;
 
-    private void OnEnable()
-    {
-        _rangeChecker.OnTargetEnteredRange += LaunchAttack;
-        _rangeChecker.OnTargetExitedRange += LaunchMove;
-
-        LaunchMove();
-    }
+    private Dictionary<EnemyState, IEnemyState> _states;
 
     private void OnDisable()
     {
-        _rangeChecker.OnTargetEnteredRange -= LaunchAttack;
-        _rangeChecker.OnTargetExitedRange -= LaunchMove;
-
         _currentState = null;
     }
 
@@ -31,29 +19,20 @@ public class EnemyStateMachine : MonoBehaviour
             _currentState.Update();
     }
 
-    private void LaunchMove()
+    public void ChangeState(EnemyState state)
     {
-        ChangeState(_moveState);
-    }
+        IEnemyState enemyState = _states[state];
 
-    private void LaunchAttack()
-    {
-        ChangeState(_attackState);
-    }
-
-    private void ChangeState(IEnemyState newState)
-    {
-        if (_currentState == newState)
+        if (_currentState == enemyState)
             return;
 
-        _currentState = newState;
+        _currentState = enemyState;
         _currentState.Enter();
     }
 
     [Inject]
-    private void Construct(EnemyMoveState enemyMoveState, EnemyAttackState enemyAttackState)
+    private void Construct(EnemyStateMachineFactory enemyStateMachineFactory)
     {
-        _moveState = enemyMoveState;
-        _attackState = enemyAttackState;
+        _states = enemyStateMachineFactory.Create();
     }
 }

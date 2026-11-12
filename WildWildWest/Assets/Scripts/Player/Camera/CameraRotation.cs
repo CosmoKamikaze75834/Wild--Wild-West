@@ -21,7 +21,7 @@ public class CameraRotation : MonoBehaviour
         _cameraAngle = Mathf.Clamp(_cameraAngle, _verticalMinAngle, _verticalMaxAngle);
     }
 
-    private void Update()
+    private void LateUpdate()
     {
         RotateCameraVertical();
     }

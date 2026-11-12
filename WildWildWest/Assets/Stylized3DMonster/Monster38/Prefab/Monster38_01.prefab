@@ -18,6 +18,7 @@ GameObject:
   - component: {fileID: 4131094231190693277}
   - component: {fileID: 368719191023488786}
   - component: {fileID: 6782332730989759963}
+  - component: {fileID: 3804706897946984517}
   m_Layer: 8
   m_Name: Monster38_01
   m_TagString: Untagged
@@ -140,7 +141,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _maxHealth: 50
-  _currentHealth: 0
 --- !u!135 &368719191023488786
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -185,41 +185,20 @@ CapsuleCollider:
   m_Height: 1.9422982
   m_Direction: 1
   m_Center: {x: 0, y: 0.949773, z: 0}
---- !u!1 &5726291773531120309
-GameObject:
+--- !u!114 &3804706897946984517
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2688751970580287573}
-  m_Layer: 5
-  m_Name: HealthBar
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &2688751970580287573
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5726291773531120309}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 6263776116350951587}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_GameObject: {fileID: 3064182496570947963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d76365dff1f57144fa4a7e6eccee62ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _rangeChecker: {fileID: 6429451805500606421}
+  _enemyStateMachine: {fileID: 1964317612946553198}
 --- !u!1 &5857162457477074173
 GameObject:
   m_ObjectHideFlags: 0
@@ -247,18 +226,17 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5857162457477074173}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0}
-  m_LocalPosition: {x: 0, y: 0, z: 0.38473928}
+  m_LocalPosition: {x: 0, y: 0, z: 0.005}
   m_LocalScale: {x: 0.8667932, y: 0.8667931, z: 0.8667932}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9207456445637884990}
-  - {fileID: 2688751970580287573}
   m_Father: {fileID: 5333476231939318599}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: -0.102350414, y: 5.0000005}
-  m_SizeDelta: {x: 908.3, y: 1600.1}
+  m_SizeDelta: {x: 200, y: 40}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &5251883797032113849
 Canvas:
@@ -334,8 +312,9 @@ GameObject:
   - component: {fileID: 9207456445637884990}
   - component: {fileID: 5045509817039168142}
   - component: {fileID: 574331664597856982}
+  - component: {fileID: 1761339006201605729}
   m_Layer: 5
-  m_Name: Image
+  m_Name: HealthBar
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -357,7 +336,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -0.172, y: -3.5}
+  m_AnchoredPosition: {x: -0.124, y: -3.693}
   m_SizeDelta: {x: 1.26, y: 0.8}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5045509817039168142
@@ -389,15 +368,28 @@ MonoBehaviour:
     m_PersistentCalls:
       m_Calls: []
   m_Sprite: {fileID: 21300000, guid: e06183bbec35e264caedfa184c114121, type: 3}
-  m_Type: 0
+  m_Type: 3
   m_PreserveAspect: 0
   m_FillCenter: 1
-  m_FillMethod: 4
+  m_FillMethod: 0
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
   m_UseSpriteMesh: 0
   m_PixelsPerUnitMultiplier: 1
+--- !u!114 &1761339006201605729
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8296277871121792795}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c8cd10df890276e4bbb299abe5212bd4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _bar: {fileID: 574331664597856982}
 --- !u!1001 &6596916709020927398
 PrefabInstance:
   m_ObjectHideFlags: 0

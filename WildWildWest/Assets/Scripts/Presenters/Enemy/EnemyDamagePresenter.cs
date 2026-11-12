@@ -10,13 +10,13 @@ public class EnemyDamagePresenter : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.OnDamaged += _damageView.ShowDamage;
+        _health.Damaged += _damageView.ShowDamage;
         _enemy.Died += Create;
     }
 
     private void OnDisable()
     {
-        _health.OnDamaged -= _damageView.ShowDamage;
+        _health.Damaged -= _damageView.ShowDamage;
         _enemy.Died -= Create;
 
     }

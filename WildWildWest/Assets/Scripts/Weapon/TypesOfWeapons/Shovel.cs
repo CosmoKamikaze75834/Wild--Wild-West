@@ -11,7 +11,5 @@ public class Shovel : Weapon
 
         foreach (var item in enemies)
             ApplyDamage(item);
-
-        Debug.Log(enemies.Count);
     }
 }

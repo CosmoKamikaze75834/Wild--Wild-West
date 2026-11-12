@@ -12,8 +12,8 @@ public class Health : MonoBehaviour, IDamageable
 
     public float MaxHealth => _maxHealth;
 
-    public event Action OnDied;
-    public event Action OnDamaged;
+    public event Action Died;
+    public event Action Damaged;
     public event Action<float> HealthChanged;
 
     public void TakeDamage(float damage)
@@ -31,10 +31,10 @@ public class Health : MonoBehaviour, IDamageable
 
         HealthChanged?.Invoke(_currentHealth);
 
-        OnDamaged?.Invoke();
+        Damaged?.Invoke();
 
         if (IsDead())
-            OnDied?.Invoke();
+            Died?.Invoke();
     }
 
     public void Reset()

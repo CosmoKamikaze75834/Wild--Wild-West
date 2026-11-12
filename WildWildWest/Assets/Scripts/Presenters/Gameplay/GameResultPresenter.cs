@@ -11,13 +11,13 @@ public class GameResultPresenter : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.OnDied += _windowDefeat.Open;
+        _health.Died += _windowDefeat.Open;
         _waveHandler.AllWavesCompleted += OpenVictory;
     }
 
     private void OnDisable()
     {
-        _health.OnDied -= _windowDefeat.Open;
+        _health.Died -= _windowDefeat.Open;
         _waveHandler.AllWavesCompleted -= OpenVictory;
     }
 

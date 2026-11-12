@@ -7,11 +7,11 @@ public class DeathPlayer : MonoBehaviour
 
     private void OnEnable()
     {
-        _health.OnDied += _gameplayPause.EstablishPause;
+        _health.Died += _gameplayPause.EstablishPause;
     }
 
     private void OnDisable()
     {
-        _health.OnDied -= _gameplayPause.EstablishPause;
+        _health.Died -= _gameplayPause.EstablishPause;
     }
 }

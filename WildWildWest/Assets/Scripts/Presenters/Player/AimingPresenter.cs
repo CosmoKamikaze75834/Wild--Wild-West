@@ -7,12 +7,12 @@ public class AimingPresenter : MonoBehaviour
 
     private void OnEnable()
     {
-        _aiming.OnAimStateChanged += HandleAimChanged;
+        _aiming.AimStateChanged += HandleAimChanged;
     }
 
     private void OnDisable()
     {
-        _aiming.OnAimStateChanged -= HandleAimChanged;
+        _aiming.AimStateChanged -= HandleAimChanged;
     }
 
     private void HandleAimChanged(bool isAiming)

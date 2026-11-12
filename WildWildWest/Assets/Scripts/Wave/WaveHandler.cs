@@ -26,14 +26,14 @@ public class WaveHandler : MonoBehaviour
     {
         _cancellationTokenSource = new CancellationTokenSource();
 
-        _spawner.OnSpawn += _progress.OnEnemySpawned;
+        _spawner.Spawn += _progress.OnEnemySpawned;
         _spawner.EnemyDied += OnEnemyDied; 
         _spawner.BossDied += OnBossDied;
     }
 
     private void OnDisable()
     {
-        _spawner.OnSpawn -= _progress.OnEnemySpawned;
+        _spawner.Spawn -= _progress.OnEnemySpawned;
         _spawner.EnemyDied -= OnEnemyDied;
         _spawner.BossDied -= OnBossDied;
 
