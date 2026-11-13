@@ -1,0 +1,16 @@
+{
+    "name": "Game.WeaponCore",
+    "rootNamespace": "",
+    "references": [
+        "GUID:71ac2884e7283ea40b5c21bf7ca2abfa"
+    ],
+    "includePlatforms": [],
+    "excludePlatforms": [],
+    "allowUnsafeCode": false,
+    "overrideReferences": false,
+    "precompiledReferences": [],
+    "autoReferenced": true,
+    "defineConstraints": [],
+    "versionDefines": [],
+    "noEngineReferences": false
+}
